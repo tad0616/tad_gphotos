@@ -8,7 +8,7 @@
         <{foreach from=$all_tad_gphotos item=data}>
             <div id="album_sn_<{$data.album_sn}>" class="polaroid" style="width: <{$config.polaroid_width}>px; height: <{$config.polaroid_height}>px; margin: <{$config.polaroid_margin_y}>px <{$config.polaroid_margin_x}>px;">
                 <a href="index.php?album_sn=<{$data.album_sn}>">
-                    <img src="<{$data.cover.image_url}>" id="tr_<{$data.album_sn}>" class="thumb-img">
+                    <img src="<{$data.cover.image_url}>" id="tr_<{$data.album_sn}>" class="thumb-img" style="height: <{$img_height}>px;" alt="<{$data.album_name}>">
                 </a>
                 <div class="polaroid-container">
                     <p>

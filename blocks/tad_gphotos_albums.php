@@ -22,9 +22,9 @@ use XoopsModules\Tadtools\Utility;
 function tad_gphotos_albums($options)
 {
     global $xoopsDB, $xoTheme;
-    if($xoTheme){
+    if ($xoTheme) {
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_gphotos/css/module.css');
-    }else{
+    } else {
         $block['css'] = '<link rel="stylesheet" href="<{$xoops_url}>/modules/tad_gphotos/css/module.css" type="text/css">';
     }
 
@@ -41,7 +41,7 @@ function tad_gphotos_albums($options)
     //{$options[5]} : 縮圖高度
     $block['height'] = $options[5] ? (int) $options[5] : 150;
 
-    $block['img_height'] = $block['height'] -30;
+    $block['img_height'] = $block['height'] - 30;
 
     $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos") . "` order by {$block['options1']} {$block['options2']} limit 0,{$block['options0']}";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql);
@@ -80,8 +80,8 @@ function tad_gphotos_albums_edit($options)
     $selected_2_1 = ($options[2] == '') ? 'selected' : '';
 
     //"呈現模式"預設值
-    $selected_3_0=($options[3]=='cover')?'selected':'';
-    $selected_3_1=($options[3]=='text')?'selected':'';
+    $selected_3_0 = ($options[3] == 'cover') ? 'selected' : '';
+    $selected_3_1 = ($options[3] == 'text') ? 'selected' : '';
 
     $form = "
     <ol class='my-form'>
@@ -115,7 +115,7 @@ function tad_gphotos_albums_edit($options)
         </li>
         <!--呈現模式-->
         <li class='my-row'>
-            <lable class='my-label'>"._MB_TAD_GPHOTOS_ALBUMS_OPT3."</lable>
+            <lable class='my-label'>" . _MB_TAD_GPHOTOS_ALBUMS_OPT3 . "</lable>
             <div class='my-content'>
                 <select name='options[3]' class='my-input'>
                     <option value='cover' $selected_3_0>" . _MB_TAD_GPHOTOS_ALBUMS_OPT3_VAL0 . "</option>

@@ -18,12 +18,12 @@ div.polaroid {
 
 div.polaroid-container {
     text-align: center;
-    padding: 3px 20px;
+    padding: 0px 20px;
     background-color: white;
 }
 
 div.polaroid-container>p {
     overflow: hidden;
-    height: 27px;
+    height: 24px;
     cursor: text;
 }

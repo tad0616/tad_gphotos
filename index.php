@@ -165,6 +165,7 @@ function tad_gphotos_list()
     $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
     $xoopsTpl->assign('all_tad_gphotos', $all_tad_gphotos);
 
+    $xoopsTpl->assign('img_height', $xoopsModuleConfig['polaroid_height']-30);
     $xoopsTpl->assign('config', $xoopsModuleConfig);
 }
 
@@ -474,6 +475,7 @@ function tad_gphotos_images_list($album_sn = '', $url = "", $key = "")
     $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
     $xoopsTpl->assign('all_tad_gphotos_images', $all_tad_gphotos_images);
     $xoopsTpl->assign('config', $xoopsModuleConfig);
+    $xoopsTpl->assign('img_height', $xoopsModuleConfig['polaroid_height']-30);
 }
 
 //取得tad_gphotos所有資料陣列
