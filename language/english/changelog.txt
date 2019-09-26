@@ -1,3 +1,5 @@
-tad_gphotos 1.0 (2019-09-25 釋出)
- =================================================
- 1.正式釋出
+Tad_gphotos 1.0 (released from 2019-09-26)
+  ==========================================================
+  1. Official release
+  2. Quickly import Google Photos albums without taking up space on the site
+  3. Provide a list of albums, seamless marquees, photo album thumbnails, etc.

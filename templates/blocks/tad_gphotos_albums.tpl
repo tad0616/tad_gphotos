@@ -21,3 +21,8 @@
         <{/foreach}>
     </div>
 <{/if}>
+<div class="text-right">
+    <span class="badge">
+        <a href="<{$xoops_url}>/modules/tad_gphotos/index.php">more...</a>
+    </span>
+</div>

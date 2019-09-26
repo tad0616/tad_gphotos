@@ -32,7 +32,7 @@ $modversion['dirname'] = basename(__DIR__);
 
 //---模組狀態資訊---//
 $modversion['status_version'] = '1.0';
-$modversion['release_date'] = '2019-10-02';
+$modversion['release_date'] = '2019-09-26';
 $modversion['module_website_url'] = 'https://www.tad0616.net';
 $modversion['module_website_name'] = _MI_TADGPHOTOS_AUTHOR_WEB;
 $modversion['module_status'] = 'release';
