@@ -20,7 +20,7 @@
             <{$smarty.const._MD_TADGPHOTOS_ALBUM_URL}>
         </label>
         <div class="">
-            <input type="text" name="album_url" id="album_url" class="form-control border-primary validate[required , custom[url]]" value="<{$album_url}>" placeholder="<{$smarty.const._MD_TADGPHOTOS_ALBUM_URL}>">
+            <input type="text" name="album_url" id="album_url" class="form-control border-primary validate[required , custom[url]]" value="<{$album_url}>" placeholder="<{$smarty.const._MD_TADGPHOTOS_ALBUM_URL_DEMO}>">
         </div>
     </div>
 
