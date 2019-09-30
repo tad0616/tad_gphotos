@@ -19,7 +19,7 @@ use XoopsModules\Tadtools\Utility;
  **/
 
 /********************* 自訂函數 *********************/
-function dd($array = [])
+function ddd($array = [])
 {
     Utility::dd($array);
 }
@@ -29,7 +29,7 @@ function chk_permission($mode = '')
     global $xoopsTpl;
     $create_album = Utility::power_chk("create_album", $tad_gphotos_cate_sn);
     if ($mode == 'return') {
-        $xoopsTpl->assign('create_album',$create_album);
+        $xoopsTpl->assign('create_album', $create_album);
         return $create_album;
     }
     if (!$create_album) {
