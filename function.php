@@ -19,7 +19,7 @@ use XoopsModules\Tadtools\Utility;
  **/
 
 /********************* 自訂函數 *********************/
-function ddd($array = [])
+function vv($array = [])
 {
     Utility::dd($array);
 }
