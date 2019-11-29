@@ -11,7 +11,7 @@ function 搜尋函數名稱($queryarray, $andor, $limit, $offset, $userid)
         $queryarray = $arr;
     }
     $sql = 'SELECT `流水號欄位`,`標題欄位`,`日期欄位`, `uid欄位` FROM ' . $xoopsDB->prefix('資料表') . ' WHERE 篩選條件';
-    if ($userid != 0) {
+    if (0 != $userid) {
         $sql .= ' AND `uid欄位`=' . $userid . ' ';
     }
     if (is_array($queryarray) && $count = count($queryarray)) {
