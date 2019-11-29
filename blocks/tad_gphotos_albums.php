@@ -75,17 +75,17 @@ function tad_gphotos_albums_edit($options)
     $options[5] = $options[5] ? (int) $options[5] : 150;
 
     //"排序依據"預設值
-    $selected_1_0 = ($options[1] == 'album_sort') ? 'selected' : '';
-    $selected_1_1 = ($options[1] == 'create_date') ? 'selected' : '';
-    $selected_1_2 = ($options[1] == 'rand()') ? 'selected' : '';
+    $selected_1_0 = ('album_sort' == $options[1]) ? 'selected' : '';
+    $selected_1_1 = ('create_date' == $options[1]) ? 'selected' : '';
+    $selected_1_2 = ('rand()' == $options[1]) ? 'selected' : '';
 
     //"排序方式"預設值
-    $selected_2_0 = ($options[2] == 'desc') ? 'selected' : '';
-    $selected_2_1 = ($options[2] == '') ? 'selected' : '';
+    $selected_2_0 = ('desc' == $options[2]) ? 'selected' : '';
+    $selected_2_1 = ('' == $options[2]) ? 'selected' : '';
 
     //"呈現模式"預設值
-    $selected_3_0 = ($options[3] == 'cover') ? 'selected' : '';
-    $selected_3_1 = ($options[3] == 'text') ? 'selected' : '';
+    $selected_3_0 = ('cover' == $options[3]) ? 'selected' : '';
+    $selected_3_1 = ('text' == $options[3]) ? 'selected' : '';
 
     $form = "
     <ol class='my-form'>

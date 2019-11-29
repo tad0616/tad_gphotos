@@ -73,12 +73,12 @@ function tad_gphotos_marquee_edit($options)
     $options[5] = $options[5] ? (int) $options[5] : 10;
 
     //"排序依據"預設值
-    $selected_2_0 = ($options[2] == 'image_sn') ? 'selected' : '';
-    $selected_2_1 = ($options[2] == 'rand()') ? 'selected' : '';
+    $selected_2_0 = ('image_sn' == $options[2]) ? 'selected' : '';
+    $selected_2_1 = ('rand()' == $options[2]) ? 'selected' : '';
 
     //"排序方式"預設值
-    $selected_3_0 = ($options[3] == 'desc') ? 'selected' : '';
-    $selected_3_1 = ($options[3] == '') ? 'selected' : '';
+    $selected_3_0 = ('desc' == $options[3]) ? 'selected' : '';
+    $selected_3_1 = ('' == $options[3]) ? 'selected' : '';
 
     //"選擇相簿"預設值
     $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos") . "` order by create_date desc";
