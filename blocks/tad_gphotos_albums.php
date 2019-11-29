@@ -35,11 +35,11 @@ function tad_gphotos_albums($options)
     //{$options[0]} : 列出幾本項目
     $block['options0'] = $options[0] ? (int) $options[0] : 5;
     //{$options[1]} : 排序依據
-    $block['options1'] = $options[1] ? $options[1] : 'rand()';
+    $block['options1'] = $options[1] ?: 'rand()';
     //{$options[2]} : 排序方式
     $block['options2'] = $options[2];
     //{$options[3]} : 呈現模式
-    $block['display'] = $options[3] ? $options[3] : 'cover';
+    $block['display'] = $options[3] ?: 'cover';
     //{$options[4]} : 縮圖寬度
     $block['width'] = $options[4] ? (int) $options[4] : 150;
     //{$options[5]} : 縮圖高度

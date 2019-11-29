@@ -32,7 +32,7 @@ function tad_gphotos_marquee($options)
     //{$options[1]} : 相片數
     $block['options1'] = $options[1] ? (int) $options[1] : 12;
     //{$options[2]} : 排序依據
-    $block['options2'] = $options[2] ? $options[2] : 'rand()';
+    $block['options2'] = $options[2] ?: 'rand()';
     //{$options[3]} : 排序方式
     $block['options3'] = $options[3];
     //{$options[4]} : 跑馬燈高度
