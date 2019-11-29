@@ -29,7 +29,7 @@ $i++;
 $adminmenu[$i]['title'] = _MI_TADGPHOTOS_ADMENU2;
 $adminmenu[$i]['link'] = 'admin/main.php';
 $adminmenu[$i]['desc'] = _MI_TADGPHOTOS_ADMENU2_DESC;
-$adminmenu[$i]['icon'] = "images/admin/button.png";
+$adminmenu[$i]['icon'] = 'images/admin/button.png';
 
 $i++;
 $adminmenu[$i]['title'] = _MI_TAD_ADMIN_ABOUT;
