@@ -1,6 +1,6 @@
 <?php
 use XoopsModules\Tadtools\Utility;
-if (!class_exists('XoopsModules\Tadtools\Utility')) {
+if (!class_exists(Utility::class)) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
 
