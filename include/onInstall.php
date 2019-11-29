@@ -26,10 +26,10 @@ if (!class_exists('XoopsModules\Tadtools\Utility')) {
 function xoops_module_install_tad_gphotos(&$module)
 {
 
-    Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_gphotos");
-    Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_gphotos/file");
-    Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_gphotos/image");
-    Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_gphotos/image/.thumbs");
+    Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_gphotos');
+    Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_gphotos/file');
+    Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_gphotos/image');
+    Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_gphotos/image/.thumbs');
 
     return true;
 }

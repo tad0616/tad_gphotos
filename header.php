@@ -18,6 +18,6 @@
  **/
 
 
-include_once "../../mainfile.php";
-include_once "function.php";
-include_once "interface_menu.php";
+include_once '../../mainfile.php';
+include_once 'function.php';
+include_once 'interface_menu.php';
