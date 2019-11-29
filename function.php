@@ -28,7 +28,7 @@ function chk_permission($mode = '')
 {
     global $xoopsTpl;
     $create_album = Utility::power_chk('create_album', isset($tad_gphotos_cate_sn)?$tad_gphotos_cate_sn:'');
-    if ('return' == $mode) {
+    if ('return' === $mode) {
         $xoopsTpl->assign('create_album', $create_album);
         return $create_album;
     }
