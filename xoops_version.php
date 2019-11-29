@@ -27,7 +27,7 @@ $modversion['author'] = _MI_TADGPHOTOS_AUTHOR;
 $modversion['credits'] = _MI_TADGPHOTOS_CREDITS;
 $modversion['help'] = 'page=help';
 $modversion['license'] = 'GPL see LICENSE';
-$modversion['image'] = "images/logo.png";
+$modversion['image'] = 'images/logo.png';
 $modversion['dirname'] = basename(__DIR__);
 
 //---模組狀態資訊---//
@@ -49,15 +49,15 @@ $modversion['paypal']['amount'] = 0;
 $modversion['paypal']['currency_code'] = 'USD';
 
 //---安裝設定---//
-$modversion['onInstall'] = "include/onInstall.php";
-$modversion['onUpdate'] = "include/onUpdate.php";
-$modversion['onUninstall'] = "include/onUninstall.php";
+$modversion['onInstall'] = 'include/onInstall.php';
+$modversion['onUpdate'] = 'include/onUpdate.php';
+$modversion['onUninstall'] = 'include/onUninstall.php';
 
 //---資料表架構---//
-$modversion['sqlfile']['mysql'] = "sql/mysql.sql";
-$modversion['tables'][] = "tad_gphotos";
-$modversion['tables'][] = "tad_gphotos_images";
-$modversion['tables'][] = "tad_gphotos_data_center";
+$modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
+$modversion['tables'][] = 'tad_gphotos';
+$modversion['tables'][] = 'tad_gphotos_images';
+$modversion['tables'][] = 'tad_gphotos_data_center';
 
 //---後台使用系統選單---//
 $modversion['system_menu'] = 1;

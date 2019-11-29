@@ -33,7 +33,7 @@ function tad_gphotos_thumbs($options)
     //{$options[1]} : 相片數
     $block['options1'] = $options[1] ? (int) $options[1] : 20;
     //{$options[2]} : 排序依據
-    $block['options2'] = $options[2] ? $options[2] : 'rand()';
+    $block['options2'] = $options[2] ?: 'rand()';
     //{$options[3]} : 排序方式
     $block['options3'] = $options[3];
     //{$options[4]} : 縮圖寬度
@@ -41,13 +41,13 @@ function tad_gphotos_thumbs($options)
     //{$options[5]} : 縮圖高度
     $block['height'] = $options[5] ? (int) $options[5] : 150;
 
-    $where = !empty($album_sn) ? "where `album_sn` = '{$album_sn}'" : "order by `create_date` desc limit 0,1";
-    $sql = "select `album_sn`, `album_url`, `album_name` from `" . $xoopsDB->prefix("tad_gphotos") . "` $where";
+    $where = !empty($album_sn) ? "where `album_sn` = '{$album_sn}'" : 'order by `create_date` desc limit 0,1';
+    $sql = 'select `album_sn`, `album_url`, `album_name` from `' . $xoopsDB->prefix('tad_gphotos') . "` $where";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     list($album_sn, $album_url, $album_name) = $xoopsDB->fetchRow($result);
     list($url, $key) = explode('?key=', $album_url);
 
-    $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos_images") . "` where `album_sn` = '{$album_sn}' order by {$block['options2']} {$block['options3']} limit 0,{$block['options1']}";
+    $sql = 'select * from `' . $xoopsDB->prefix('tad_gphotos_images') . "` where `album_sn` = '{$album_sn}' order by {$block['options2']} {$block['options3']} limit 0,{$block['options1']}";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     $content = [];
     while ($all = $xoopsDB->fetchArray($result)) {
@@ -74,15 +74,15 @@ function tad_gphotos_thumbs_edit($options)
     $options[5] = $options[5] ? (int) $options[5] : 150;
 
     //"排序依據"預設值
-    $selected_2_0 = ($options[2] == 'image_sn') ? 'selected' : '';
-    $selected_2_1 = ($options[2] == 'rand()') ? 'selected' : '';
+    $selected_2_0 = ('image_sn' === $options[2]) ? 'selected' : '';
+    $selected_2_1 = ('rand()' === $options[2]) ? 'selected' : '';
 
     //"排序方式"預設值
-    $selected_3_0 = ($options[3] == 'desc') ? 'selected' : '';
-    $selected_3_1 = ($options[3] == '') ? 'selected' : '';
+    $selected_3_0 = ('desc' === $options[3]) ? 'selected' : '';
+    $selected_3_1 = ('' == $options[3]) ? 'selected' : '';
 
     //"選擇相簿"預設值
-    $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos") . "` order by create_date desc";
+    $sql = 'select * from `' . $xoopsDB->prefix('tad_gphotos') . '` order by create_date desc';
     $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     $opt = '<option value="">' . _MB_TAD_GPHOTOS_LATEST_ALBUM . '</option>';
     while ($album = $xoopsDB->fetchArray($result)) {

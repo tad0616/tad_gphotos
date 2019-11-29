@@ -43,7 +43,7 @@ function tad_gphotos_show_one($album_sn = '')
 
     $myts = \MyTextSanitizer::getInstance();
 
-    $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos") . "`
+    $sql = 'select * from `' . $xoopsDB->prefix('tad_gphotos') . "`
     where `album_sn` = '{$album_sn}' ";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     $all = $xoopsDB->fetchArray($result);
@@ -74,7 +74,7 @@ function tad_gphotos_show_one($album_sn = '')
     $xoopsTpl->assign('create_date', $create_date);
 
     $SweetAlert = new SweetAlert();
-    $SweetAlert->render('delete_tad_gphotos_func', "{$_SERVER['PHP_SELF']}?op=delete_tad_gphotos&album_sn=", "album_sn");
+    $SweetAlert->render('delete_tad_gphotos_func', "{$_SERVER['PHP_SELF']}?op=delete_tad_gphotos&album_sn=", 'album_sn');
 
     $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
 
@@ -100,7 +100,7 @@ function delete_tad_gphotos($album_sn = '')
 
     delete_tad_gphotos_images($album_sn);
 
-    $sql = "delete from `" . $xoopsDB->prefix("tad_gphotos") . "`
+    $sql = 'delete from `' . $xoopsDB->prefix('tad_gphotos') . "`
     where `album_sn` = '{$album_sn}'";
     $xoopsDB->queryF($sql) or Utility::web_error($sql);
 
@@ -117,7 +117,7 @@ function tad_gphotos_list()
 
     $myts = \MyTextSanitizer::getInstance();
 
-    $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos") . "` order by album_sort, create_date desc";
+    $sql = 'select * from `' . $xoopsDB->prefix('tad_gphotos') . '` order by album_sort, create_date desc';
 
     //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
     $PageBar = Utility::getPageBar($sql, 20, 10);
@@ -159,7 +159,7 @@ function tad_gphotos_list()
     //刪除確認的JS
     $SweetAlert = new SweetAlert();
     $SweetAlert->render('delete_tad_gphotos_func',
-        "{$_SERVER['PHP_SELF']}?op=delete_tad_gphotos&album_sn=", "album_sn");
+                        "{$_SERVER['PHP_SELF']}?op=delete_tad_gphotos&album_sn=", 'album_sn');
 
     $xoopsTpl->assign('bar', $bar);
     $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
@@ -199,26 +199,26 @@ function tad_gphotos_form($album_sn = '')
     $album_url = !isset($DBV['album_url']) ? '' : $DBV['album_url'];
     $xoopsTpl->assign('album_url', $album_url);
     //設定 uid 欄位的預設值
-    $user_uid = $xoopsUser ? $xoopsUser->uid() : "";
+    $user_uid = $xoopsUser ? $xoopsUser->uid() : '';
     $uid = !isset($DBV['uid']) ? $user_uid : $DBV['uid'];
     $xoopsTpl->assign('uid', $uid);
     //設定 create_date 欄位的預設值
-    $create_date = !isset($DBV['create_date']) ? date("Y-m-d H:i:s") : $DBV['create_date'];
+    $create_date = !isset($DBV['create_date']) ? date('Y-m-d H:i:s') : $DBV['create_date'];
     $xoopsTpl->assign('create_date', $create_date);
 
-    $op = empty($album_sn) ? "insert_tad_gphotos" : "update_tad_gphotos";
+    $op = empty($album_sn) ? 'insert_tad_gphotos' : 'update_tad_gphotos';
     //$op = "replace_tad_gphotos";
 
     //套用formValidator驗證機制
-    $formValidator = new FormValidator("#myForm", true);
+    $formValidator = new FormValidator('#myForm', true);
     $formValidator->render();
 
     //加入Token安全機制
-    include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     $token = new \XoopsFormHiddenToken();
     $token_form = $token->render();
-    $xoopsTpl->assign("token_form", $token_form);
-    $xoopsTpl->assign('action', $_SERVER["PHP_SELF"]);
+    $xoopsTpl->assign('token_form', $token_form);
+    $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
     $xoopsTpl->assign('next_op', $op);
 }
 
@@ -231,7 +231,7 @@ function get_tad_gphotos($album_sn = '')
         return;
     }
 
-    $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos") . "`
+    $sql = 'select * from `' . $xoopsDB->prefix('tad_gphotos') . "`
     where `album_sn` = '{$album_sn}'";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     $data = $xoopsDB->fetchArray($result);
@@ -248,7 +248,7 @@ function insert_tad_gphotos()
 
     //XOOPS表單安全檢查
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        $error = implode("<br />", $GLOBALS['xoopsSecurity']->getErrors());
+        $error = implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());
         redirect_header($_SERVER['PHP_SELF'], 3, $error);
     }
 
@@ -258,17 +258,17 @@ function insert_tad_gphotos()
     $album_url = $myts->addSlashes($_POST['album_url']);
     $album_sort = $album_counter = 0;
     //取得使用者編號
-    $uid = ($xoopsUser) ? $xoopsUser->uid() : "";
+    $uid = ($xoopsUser) ? $xoopsUser->uid() : '';
     $uid = !empty($_POST['uid']) ? (int) $_POST['uid'] : $uid;
-    $create_date = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
+    $create_date = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
-    require 'vendor/autoload.php';
+    require __DIR__ . '/vendor/autoload.php';
     $crawler = new Crawler();
     $album = $crawler->getAlbum($album_url);
     $album_name = !empty($_POST['album_name']) ? $myts->addSlashes($_POST['album_name']) : $myts->addSlashes($album['name']);
     $album_id = $myts->addSlashes($album['id']);
 
-    $sql = "insert into `" . $xoopsDB->prefix("tad_gphotos") . "` (
+    $sql = 'insert into `' . $xoopsDB->prefix('tad_gphotos') . "` (
         `album_id`,
         `album_name`,
         `album_url`,
@@ -306,7 +306,7 @@ function add_tad_gphotos_counter($album_sn = '')
         return;
     }
 
-    $sql = "update `" . $xoopsDB->prefix("tad_gphotos") . "`
+    $sql = 'update `' . $xoopsDB->prefix('tad_gphotos') . "`
     set `album_counter` = `album_counter` + 1
     where `album_sn` = '{$album_sn}'";
     $xoopsDB->queryF($sql) or Utility::web_error($sql);
@@ -322,7 +322,7 @@ function update_tad_gphotos($album_sn = '')
 
     //XOOPS表單安全檢查
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        $error = implode("<br />", $GLOBALS['xoopsSecurity']->getErrors());
+        $error = implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());
         redirect_header($_SERVER['PHP_SELF'], 3, $error);
     }
 
@@ -332,11 +332,11 @@ function update_tad_gphotos($album_sn = '')
     $album_url = $myts->addSlashes($_POST['album_url']);
 
     //取得使用者編號
-    $uid = ($xoopsUser) ? $xoopsUser->uid() : "";
+    $uid = ($xoopsUser) ? $xoopsUser->uid() : '';
     $uid = !empty($_POST['uid']) ? (int) $_POST['uid'] : $uid;
-    $create_date = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
+    $create_date = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
-    $sql = "update `" . $xoopsDB->prefix("tad_gphotos") . "` set
+    $sql = 'update `' . $xoopsDB->prefix('tad_gphotos') . "` set
     `album_name` = '{$album_name}',
     `album_url` = '{$album_url}',
     `uid` = '{$uid}'
@@ -351,7 +351,7 @@ function get_tad_gphotos_rand_image($album_sn = '')
 {
     global $xoopsDB;
 
-    $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos_images") . "`
+    $sql = 'select * from `' . $xoopsDB->prefix('tad_gphotos_images') . "`
     where `album_sn` = '{$album_sn}' order by rand() limit 0,1";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     $data = $xoopsDB->fetchArray($result);
@@ -374,7 +374,7 @@ function insert_tad_gphotos_images($photo = [])
     $image_height = (int) $photo['height'];
     $image_url = $myts->addSlashes($photo['url']);
 
-    $sql = "insert into `" . $xoopsDB->prefix("tad_gphotos_images") . "` (
+    $sql = 'insert into `' . $xoopsDB->prefix('tad_gphotos_images') . "` (
         `album_sn`,
         `image_id`,
         `image_width`,
@@ -409,20 +409,20 @@ function delete_tad_gphotos_images($album_sn = '')
         return;
     }
 
-    $sql = "delete from `" . $xoopsDB->prefix("tad_gphotos_images") . "`
+    $sql = 'delete from `' . $xoopsDB->prefix('tad_gphotos_images') . "`
     where `album_sn` = '{$album_sn}'";
     $xoopsDB->queryF($sql) or Utility::web_error($sql);
 
 }
 
 //列出所有tad_gphotos_images資料
-function tad_gphotos_images_list($album_sn = '', $url = "", $key = "")
+function tad_gphotos_images_list($album_sn = '', $url = '', $key = '')
 {
     global $xoopsDB, $xoopsTpl, $xoopsModuleConfig;
 
     $myts = \MyTextSanitizer::getInstance();
 
-    $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos_images") . "` where `album_sn`='$album_sn'";
+    $sql = 'select * from `' . $xoopsDB->prefix('tad_gphotos_images') . "` where `album_sn`='$album_sn'";
 
     //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
     $PageBar = Utility::getPageBar($sql, 48, 10);
@@ -458,7 +458,7 @@ function tad_gphotos_images_list($album_sn = '', $url = "", $key = "")
         $all_tad_gphotos_images[$i]['image_description'] = $image_description;
 
         if (chk_permission('return')) {
-            $jeditable->setTextCol("#gphoto" . $image_sn, 'ajax.php', '100%', '24px', "{'image_sn': $image_sn, 'op' : 'save_title'}", '');
+            $jeditable->setTextCol('#gphoto' . $image_sn, 'ajax.php', '100%', '24px', "{'image_sn': $image_sn, 'op' : 'save_title'}", '');
         }
 
         $i++;
@@ -468,7 +468,7 @@ function tad_gphotos_images_list($album_sn = '', $url = "", $key = "")
     //刪除確認的JS
     $SweetAlert = new SweetAlert();
     $SweetAlert->render('delete_tad_gphotos_images_func',
-        "{$_SERVER['PHP_SELF']}?op=delete_tad_gphotos_images&image_sn=", "image_sn");
+                        "{$_SERVER['PHP_SELF']}?op=delete_tad_gphotos_images&image_sn=", 'image_sn');
 
     $xoopsTpl->assign('bar', $bar);
     $xoopsTpl->assign('total', $total);
@@ -482,7 +482,7 @@ function tad_gphotos_images_list($album_sn = '', $url = "", $key = "")
 function get_tad_gphotos_all()
 {
     global $xoopsDB;
-    $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos") . "`";
+    $sql = 'select * from `' . $xoopsDB->prefix('tad_gphotos') . '`';
     $result = $xoopsDB->query($sql) or Utility::web_error($sql);
     $data_arr = array();
     while ($data = $xoopsDB->fetchArray($result)) {

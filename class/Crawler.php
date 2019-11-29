@@ -23,7 +23,7 @@ class Crawler
      */
     public function __construct(Client $client = null)
     {
-        if ($client === null) {
+        if (null === $client) {
             $this->client = new Client();
         } else {
             $this->client = $client;
