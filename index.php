@@ -262,7 +262,7 @@ function insert_tad_gphotos()
     $uid = !empty($_POST['uid']) ? (int) $_POST['uid'] : $uid;
     $create_date = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
 
-    require 'vendor/autoload.php';
+    require __DIR__ . '/vendor/autoload.php';
     $crawler = new Crawler();
     $album = $crawler->getAlbum($album_url);
     $album_name = !empty($_POST['album_name']) ? $myts->addSlashes($_POST['album_name']) : $myts->addSlashes($album['name']);

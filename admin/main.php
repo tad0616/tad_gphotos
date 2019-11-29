@@ -3,8 +3,8 @@ use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_gphotos_adm_groupperm.tpl';
-include_once 'header.php';
-include_once '../function.php';
+include_once __DIR__ . '/header.php';
+include_once dirname(__DIR__) . '/function.php';
 include_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.php';
 include_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php';
 include_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
@@ -39,4 +39,4 @@ foreach ($item_list as $item_id => $item_name) {
 }
 
 echo $formi->render();
-include_once 'footer.php';
+include_once __DIR__ . '/footer.php';
