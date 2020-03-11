@@ -1,5 +1,5 @@
 <{if $all_tad_gphotos}>
-    <{if $smarty.session.tad_gphotos_adm}>
+    <{if $smarty.session.tad_gphotos_adm or $create_album}>
         <{$delete_tad_gphotos_func}>
     <{/if}>
 
@@ -19,7 +19,7 @@
         <{/foreach}>
     </div>
 
-    <{if $smarty.session.tad_gphotos_adm}>
+    <{if $smarty.session.tad_gphotos_adm or $create_album}>
         <div class="text-right">
             <a href="<{$xoops_url}>/modules/tad_gphotos/index.php?op=tad_gphotos_form" class="btn btn-info"><{$smarty.const._TAD_ADD}></a>
         </div>
@@ -28,7 +28,7 @@
     <{$bar}>
 <{else}>
     <div class="jumbotron text-center">
-        <{if $smarty.session.tad_gphotos_adm}>
+        <{if $smarty.session.tad_gphotos_adm or $create_album}>
             <a href="<{$xoops_url}>/modules/tad_gphotos/index.php?op=tad_gphotos_form" class="btn btn-info"><{$smarty.const._TAD_ADD}></a>
         <{else}>
             <h3><{$smarty.const._TAD_EMPTY}></h3>

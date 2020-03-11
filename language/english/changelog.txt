@@ -1,3 +1,8 @@
+Tad_gphotos 1.1 (released from 2019-10-05)
+  ==========================================================
+  1. Fixed the problem that the permission setting could not work correctly.
+
+
 Tad_gphotos 1.0 (released from 2019-09-26)
   ==========================================================
   1. Official release

@@ -26,10 +26,12 @@ function vv($array = [])
 
 function chk_permission($mode = '')
 {
-    global $xoopsTpl;
-    $create_album = Utility::power_chk("create_album", $tad_gphotos_cate_sn);
+    global $xoopsTpl, $xoopsUser;
+    $create_album = Utility::power_chk("tad_gphotos", 1);
     if ($mode == 'return') {
         $xoopsTpl->assign('create_album', $create_album);
+        $uid = $xoopsUser ? $xoopsUser->uid() : '';
+        $xoopsTpl->assign('now_uid', $uid);
         return $create_album;
     }
     if (!$create_album) {

@@ -80,6 +80,11 @@ function tad_gphotos_show_one($album_sn = '')
 
     list($url, $key) = explode('?key=', $album_url);
     tad_gphotos_images_list($album_sn, $url, $key);
+
+    if (chk_permission('return')) {
+        Utility::get_jquery(true);
+    }
+
     // $fancybox=new FancyBox('.google-photos');
     // $fancybox->render();
     // $ColorBox = new ColorBox('.thumb-img');
@@ -165,7 +170,7 @@ function tad_gphotos_list()
     $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
     $xoopsTpl->assign('all_tad_gphotos', $all_tad_gphotos);
 
-    $xoopsTpl->assign('img_height', $xoopsModuleConfig['polaroid_height']-30);
+    $xoopsTpl->assign('img_height', $xoopsModuleConfig['polaroid_height'] - 30);
     $xoopsTpl->assign('config', $xoopsModuleConfig);
 }
 
@@ -331,6 +336,10 @@ function update_tad_gphotos($album_sn = '')
     $album_name = $myts->addSlashes($_POST['album_name']);
     $album_url = $myts->addSlashes($_POST['album_url']);
 
+    // require 'vendor/autoload.php';
+    // $crawler = new Crawler();
+    // $album = $crawler->getAlbum($album_url);
+
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->uid() : "";
     $uid = !empty($_POST['uid']) ? (int) $_POST['uid'] : $uid;
@@ -475,7 +484,7 @@ function tad_gphotos_images_list($album_sn = '', $url = "", $key = "")
     $xoopsTpl->assign('action', $_SERVER['PHP_SELF']);
     $xoopsTpl->assign('all_tad_gphotos_images', $all_tad_gphotos_images);
     $xoopsTpl->assign('config', $xoopsModuleConfig);
-    $xoopsTpl->assign('img_height', $xoopsModuleConfig['polaroid_height']-30);
+    $xoopsTpl->assign('img_height', $xoopsModuleConfig['polaroid_height'] - 30);
 }
 
 //取得tad_gphotos所有資料陣列
