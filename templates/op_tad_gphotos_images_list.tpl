@@ -7,7 +7,7 @@
         <{foreach from=$all_tad_gphotos_images item=data}>
             <div class="polaroid" style="width: <{$config.polaroid_width}>px; height: <{$config.polaroid_height}>px; margin: <{$config.polaroid_margin_y}>px <{$config.polaroid_margin_x}>px;">
                 <a href="<{$data.image_link}>" target="_blank">
-                    <img src="<{$data.image_url}>" id="tr_<{$data.image_sn}>" class="thumb-img"  style="height: <{$img_height}>px;" alt="<{if $data.image_description}><{$data.image_description}><{else}><{$album_name}><{/if}>" title="<{if $data.image_description}><{$data.image_description}><{else}><{$album_name}><{/if}>">
+                    <img src="<{$data.image_url}>" id="tr_<{$data.image_sn}>" class="thumb-img"  style="height: <{$img_height}>px;" alt="<{if $data.image_description}><{$data.image_description}><{else}><{$album_name}><{/if}>" <{if $data.image_description}>title="<{$data.image_description}>"<{/if}>>
                 </a>
                 <div class="polaroid-container">
                     <p id="gphoto<{$data.image_sn}>"><{$data.image_description}></p>
