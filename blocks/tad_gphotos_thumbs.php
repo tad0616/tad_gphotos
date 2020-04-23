@@ -23,9 +23,9 @@ use XoopsModules\Tadtools\Utility;
 function tad_gphotos_thumbs($options)
 {
     global $xoopsDB, $xoTheme;
-    if($xoTheme){
+    if ($xoTheme) {
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_gphotos/css/module.css');
-    }else{
+    } else {
         $block['css'] = '<link rel="stylesheet" href="<{$xoops_url}>/modules/tad_gphotos/css/module.css" type="text/css">';
     }
     //{$options[0]} : 選擇相簿
@@ -43,12 +43,12 @@ function tad_gphotos_thumbs($options)
 
     $where = !empty($album_sn) ? "where `album_sn` = '{$album_sn}'" : "order by `create_date` desc limit 0,1";
     $sql = "select `album_sn`, `album_url`, `album_name` from `" . $xoopsDB->prefix("tad_gphotos") . "` $where";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($album_sn, $album_url, $album_name) = $xoopsDB->fetchRow($result);
     list($url, $key) = explode('?key=', $album_url);
 
     $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos_images") . "` where `album_sn` = '{$album_sn}' order by {$block['options2']} {$block['options3']} limit 0,{$block['options1']}";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $content = [];
     while ($all = $xoopsDB->fetchArray($result)) {
         $all['image_link'] = "{$url}/photo/{$all['image_id']}?key={$key}";
@@ -83,7 +83,7 @@ function tad_gphotos_thumbs_edit($options)
 
     //"選擇相簿"預設值
     $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos") . "` order by create_date desc";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $opt = '<option value="">' . _MB_TAD_GPHOTOS_LATEST_ALBUM . '</option>';
     while ($album = $xoopsDB->fetchArray($result)) {
         $selected = ($options[0] == $album['album_sn']) ? 'selected' : '';

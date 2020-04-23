@@ -20,7 +20,7 @@ function update_tad_gphotos_images($image_sn = '', $col, $value)
     $sql = "update `" . $xoopsDB->prefix("tad_gphotos_images") . "` set
     `{$col}` = '{$value}'
     where `image_sn` = '$image_sn'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     return $value;
 }

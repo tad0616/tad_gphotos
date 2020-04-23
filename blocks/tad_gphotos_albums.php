@@ -44,12 +44,12 @@ function tad_gphotos_albums($options)
     $block['img_height'] = $block['height'] - 30;
 
     $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos") . "` order by {$block['options1']} {$block['options2']} limit 0,{$block['options0']}";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while ($all = $xoopsDB->fetchArray($result)) {
 
         $sql2 = "select * from `" . $xoopsDB->prefix("tad_gphotos_images") . "` where `album_sn` = '{$all['album_sn']}' order by rand() limit 0,1";
-        $result2 = $xoopsDB->query($sql2) or Utility::web_error($sql2);
+        $result2 = $xoopsDB->query($sql2) or Utility::web_error($sql2, __FILE__, __LINE__);
         $all['cover'] = $xoopsDB->fetchArray($result2);
 
         $block['content'][] = $all;
