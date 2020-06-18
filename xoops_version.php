@@ -21,7 +21,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADGPHOTOS_NAME;
-$modversion['version'] = '1.2';
+$modversion['version'] = '1.3';
 $modversion['description'] = _MI_TADGPHOTOS_DESC;
 $modversion['author'] = _MI_TADGPHOTOS_AUTHOR;
 $modversion['credits'] = _MI_TADGPHOTOS_CREDITS;
@@ -31,13 +31,13 @@ $modversion['image'] = "images/logo.png";
 $modversion['dirname'] = basename(__DIR__);
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2020-03-14';
+$modversion['release_date'] = '2020-06-18';
 $modversion['module_website_url'] = 'https://www.tad0616.net';
 $modversion['module_website_name'] = _MI_TADGPHOTOS_AUTHOR_WEB;
 $modversion['module_status'] = 'release';
 $modversion['author_website_url'] = 'https://www.tad0616.net';
 $modversion['author_website_name'] = _MI_TADGPHOTOS_AUTHOR_WEB;
-$modversion['min_php'] = '5.4';
+$modversion['min_php'] = '5.5';
 $modversion['min_xoops'] = '2.5';
 
 //---paypal資訊---//

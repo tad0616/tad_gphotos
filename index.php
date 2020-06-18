@@ -385,8 +385,9 @@ function insert_tad_gphotos_images($photo = [])
     $image_width = (int) $photo['width'];
     $image_height = (int) $photo['height'];
     $image_url = $myts->addSlashes($photo['url']);
+    $image_description = $myts->addSlashes($photo['description']);
 
-    $sql = "insert into `" . $xoopsDB->prefix("tad_gphotos_images") . "` (
+    $sql = "replace into `" . $xoopsDB->prefix("tad_gphotos_images") . "` (
         `album_sn`,
         `image_id`,
         `image_width`,
@@ -401,7 +402,7 @@ function insert_tad_gphotos_images($photo = [])
         '{$image_url}',
         '{$image_description}'
     )";
-    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得最後新增資料的流水編號
     $image_sn = $xoopsDB->getInsertId();
@@ -504,6 +505,53 @@ function get_tad_gphotos_all()
     return $data_arr;
 }
 
+function re_get_tad_gphotos($album_sn)
+{
+
+    global $xoopsDB;
+
+    //判斷目前使用者是否有：建立相簿
+    chk_permission();
+
+    if (empty($album_sn)) {
+        return;
+    }
+
+    $sql = "select image_id, image_description from `" . $xoopsDB->prefix("tad_gphotos_images") . "` where `album_sn`='$album_sn'";
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+
+    //取得分類所有資料陣列
+    $image_description_arr = [];
+    // 記住說明
+    while (list($image_id, $image_description) = $xoopsDB->fetchRow($result)) {
+        $image_description_arr[$image_id] = $image_description;
+    }
+
+    delete_tad_gphotos_images($album_sn);
+
+    $sql = "select album_url from `" . $xoopsDB->prefix("tad_gphotos") . "`
+    where `album_sn` = '{$album_sn}' ";
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    list($album_url) = $xoopsDB->fetchRow($result);
+
+    require 'vendor/autoload.php';
+    require 'class/Crawler.php';
+    $crawler = new Crawler();
+    $album = $crawler->getAlbum($album_url);
+
+    foreach ($album['images'] as $photo) {
+        $photo['album_sn'] = $album_sn;
+        $image_id = $photo['id'];
+        $photo['description'] = $image_description_arr[$image_id];
+        insert_tad_gphotos_images($photo);
+    }
+
+    $sql = "update `" . $xoopsDB->prefix("tad_gphotos") . "` set create_date=now()
+    where `album_sn` = '{$album_sn}'";
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+
+}
+
 /*-----------執行動作判斷區----------*/
 $op = Request::getString('op');
 $album_sn = Request::getInt('album_sn');
@@ -540,6 +588,12 @@ switch ($op) {
     //更新資料
     case 'update_tad_gphotos':
         update_tad_gphotos($album_sn);
+        header("location: {$_SERVER['PHP_SELF']}?album_sn=$album_sn");
+        exit;
+
+    //重新抓取
+    case 're_get_tad_gphotos':
+        re_get_tad_gphotos($album_sn);
         header("location: {$_SERVER['PHP_SELF']}?album_sn=$album_sn");
         exit;
 

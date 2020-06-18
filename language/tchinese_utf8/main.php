@@ -18,7 +18,6 @@
  **/
 
 xoops_loadLanguage('main', 'tadtools');
-define('_TAD_NEED_TADTOOLS', '需要 tadtools 模組，可至<a href="http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS輕鬆架</a>下載。');
 
 define('_MA_TADGPHOTOS_ALBUM_ID', '相簿ID');
 define('_MA_TADGPHOTOS_ALBUM_URL', '相簿網址');
@@ -47,3 +46,5 @@ define('_MA_TADGPHOTOS_IMAGE_HEIGHT', '相片高度');
 define('_MA_TADGPHOTOS_IMAGE_URL', '相片網址');
 define('_MA_TADGPHOTOS_IMAGE_DESCRIPTION', '相片說明');
 define('_MA_TADGPHOTOS_IMAGE_TOTAL', '（共 %s 張相片）');
+define('_MD_TADGPHOTOS_ADD', '新增Google相簿');
+define('_MD_TADGPHOTOS_RE_GET', '重新擷取相片');

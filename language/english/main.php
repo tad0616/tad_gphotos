@@ -18,8 +18,6 @@
  **/
 
 xoops_loadLanguage('main', 'tadtools');
-define('_TAD_NEED_TADTOOLS', "This module needs TadTools module. You can download TadTools from <a href='http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1' target='_blank'>XOOPS Easy Go</a>.");
-
 define('_MA_TADGPHOTOS_ALBUM_ID', 'Album ID');
 define('_MA_TADGPHOTOS_ALBUM_URL', 'Photo Album URL');
 define('_MA_TADGPHOTOS_UID', 'Publisher');
@@ -47,3 +45,5 @@ define('_MA_TADGPHOTOS_IMAGE_HEIGHT', 'Photo Height');
 define('_MA_TADGPHOTOS_IMAGE_URL', 'Photo URL');
 define('_MA_TADGPHOTOS_IMAGE_DESCRIPTION', 'Photo description');
 define('_MA_TADGPHOTOS_IMAGE_TOTAL', '(Total %s photos)');
+define('_MD_TADGPHOTOS_ADD', 'Add Google Album');
+define('_MD_TADGPHOTOS_RE_GET', 're-capture photo');

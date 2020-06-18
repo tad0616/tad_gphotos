@@ -1,5 +1,11 @@
+tad_gphotos 1.3 (Released 2020-06-18)
+  ==========================================================
+ 1.Fix Google Photo Album syntax capture
+ 2. New "Retrieve" function.
+ 3. Support for XOOPS 2.5.11.
+
 tad_gphotos 1.2 (2020-03-14 released)
- =================================================
+  ==========================================================
 1. Correction for accessibility 2.0 AA standard
 
 Tad_gphotos 1.1 (2019-10-05 released)
