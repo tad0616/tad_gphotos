@@ -1,5 +1,6 @@
 CREATE TABLE `tad_gphotos` (
   `album_sn` smallint(6) unsigned NOT NULL AUTO_INCREMENT COMMENT '流水號',
+  `csn` smallint(5) unsigned NOT NULL default '0' COMMENT '所屬分類',
   `album_id` varchar(255) NOT NULL DEFAULT '' COMMENT '相簿ID',
   `album_name` varchar(255) NOT NULL DEFAULT '' COMMENT '相簿名稱',
   `album_url` varchar(1000) NOT NULL DEFAULT '' COMMENT '相簿網址',
@@ -20,7 +21,7 @@ CREATE TABLE `tad_gphotos_images` (
   `image_url` varchar(1000) NOT NULL default '' COMMENT '相片網址',
   `image_description` text NOT NULL COMMENT '相片說明',
 PRIMARY KEY  (`image_sn`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -34,4 +35,14 @@ CREATE TABLE `tad_gphotos_data_center` (
   `col_id` varchar(100) NOT NULL COMMENT '辨識字串',
   `update_time` datetime NOT NULL COMMENT '更新時間',
   PRIMARY KEY (`mid`,`col_name`,`col_sn`,`data_name`,`data_sort`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `tad_gphotos_cate` (
+  `csn` smallint(5) unsigned NOT NULL  auto_increment,
+  `of_csn` smallint(5) unsigned NOT NULL default 0 ,
+  `sort` smallint(5) unsigned NOT NULL default 0 ,
+  `title` varchar(255) NOT NULL default '' ,
+  `description` text NOT NULL ,
+  PRIMARY KEY  (`csn`)
+)ENGINE=MyISAM DEFAULT CHARSET=utf8;

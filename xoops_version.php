@@ -21,7 +21,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADGPHOTOS_NAME;
-$modversion['version'] = '1.3';
+$modversion['version'] = '1.4';
 $modversion['description'] = _MI_TADGPHOTOS_DESC;
 $modversion['author'] = _MI_TADGPHOTOS_AUTHOR;
 $modversion['credits'] = _MI_TADGPHOTOS_CREDITS;
@@ -31,7 +31,7 @@ $modversion['image'] = "images/logo.png";
 $modversion['dirname'] = basename(__DIR__);
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2020-06-18';
+$modversion['release_date'] = '2020-08-28';
 $modversion['module_website_url'] = 'https://www.tad0616.net';
 $modversion['module_website_name'] = _MI_TADGPHOTOS_AUTHOR_WEB;
 $modversion['module_status'] = 'release';
@@ -57,6 +57,7 @@ $modversion['sqlfile']['mysql'] = "sql/mysql.sql";
 $modversion['tables'][] = "tad_gphotos";
 $modversion['tables'][] = "tad_gphotos_images";
 $modversion['tables'][] = "tad_gphotos_data_center";
+$modversion['tables'][] = "tad_gphotos_cate";
 
 //---後台使用系統選單---//
 $modversion['system_menu'] = 1;
@@ -70,8 +71,7 @@ $modversion['adminmenu'] = 'admin/menu.php';
 $modversion['hasMain'] = 1;
 
 //---樣板設定---//
-$modversion['templates'][] = array('file' => 'tad_gphotos_adm_main.tpl', 'description' => 'tad_gphotos_adm_main.tpl');
-$modversion['templates'][] = array('file' => 'tad_gphotos_adm_groupperm.tpl', 'description' => 'tad_gphotos_adm_groupperm.tpl');
+$modversion['templates'][] = array('file' => 'tad_gphotos_admin.tpl', 'description' => 'tad_gphotos_admin.tpl');
 $modversion['templates'][] = array('file' => 'tad_gphotos_index.tpl', 'description' => 'tad_gphotos_index.tpl');
 
 //---區塊設定---//

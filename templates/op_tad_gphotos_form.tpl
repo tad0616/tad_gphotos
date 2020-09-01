@@ -1,18 +1,35 @@
-
-
 <!--套用formValidator驗證機制-->
 <form action="<{$action}>" method="post" id="myForm" enctype="multipart/form-data">
 
-
-    <!--相簿名稱-->
-    <div class="form-group">
-        <label class="col-label col-form-label">
-            <{$smarty.const._MD_TADGPHOTOS_ALBUM_NAME}>
-        </label>
-        <div class="">
-            <input type="text" name="album_name" id="album_name" class="form-control" value="<{$album_name}>" placeholder="<{$smarty.const._MD_TADGPHOTOS_ALBUM_NAME}><{$smarty.const._MD_TADGPHOTOS_ALBUM_NAME_HELP}>">
+<div class="row">
+    <div class="col-sm-6">
+        <!--相簿名稱-->
+        <div class="form-group">
+            <label class="col-label col-form-label">
+                <{$smarty.const._MD_TADGPHOTOS_ALBUM_NAME}>
+            </label>
+            <div class="">
+                <input type="text" name="album_name" id="album_name" class="form-control" value="<{$album_name}>" placeholder="<{$smarty.const._MD_TADGPHOTOS_ALBUM_NAME}><{$smarty.const._MD_TADGPHOTOS_ALBUM_NAME_HELP}>">
+            </div>
         </div>
     </div>
+    <div class="col-sm-6">
+        <!--相簿分類-->
+        <div class="form-group">
+            <label class="col-label col-form-label">
+                <{$smarty.const._MD_TADGPHOTOS_CSN}>
+            </label>
+            <div class="">
+                <select name="csn" id="csn" class="form-control validate[required]">
+                    <option value=""><{$smarty.const._MD_TADGPHOTOS_UNCATEGORIZED}></option>
+                    <{$cate_options}>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
     <!--相簿網址-->
     <div class="form-group">

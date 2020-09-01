@@ -19,36 +19,55 @@ namespace XoopsModules\Tad_gphotos;
  * @version    $Id $
  **/
 
-
 /**
  * Class Update
  */
 class Update
 {
 
-    /*
-public static function chk_1()
-{
-global $xoopsDB;
-$sql = 'SELECT count(`tag`) FROM ' . $xoopsDB->prefix('tad_gphotos_files_center');
-$result = $xoopsDB->query($sql);
-if (empty($result)) {
-return true;
-}
+    public static function chk_1()
+    {
+        global $xoopsDB;
+        $sql = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tad_gphotos_cate');
+        $result = $xoopsDB->query($sql);
+        if (empty($result)) {
+            return true;
+        }
 
-return false;
-}
+        return false;
+    }
 
-public static function go_1()
-{
-global $xoopsDB;
-$sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_gphotos_files_center') . "
-ADD `upload_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上傳時間',
-ADD `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上傳者',
-ADD `tag` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '註記'
-";
-$xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 30, $xoopsDB->error());
-}
- */
+    public static function go_1()
+    {
+        global $xoopsDB;
+        $sql = 'CREATE TABLE `' . $xoopsDB->prefix('tad_gphotos_cate') . "` (
+            `csn` smallint(5) unsigned NOT NULL  auto_increment,
+            `of_csn` smallint(5) unsigned NOT NULL default 0 ,
+            `sort` smallint(5) unsigned NOT NULL default 0 ,
+            `title` varchar(255) NOT NULL default '' ,
+            `description` text NOT NULL ,
+            PRIMARY KEY  (`csn`)
+        ) ENGINE=MyISAM";
+        $xoopsDB->queryF($sql);
+    }
+
+    public static function chk_2()
+    {
+        global $xoopsDB;
+        $sql = 'SELECT count(csn) FROM ' . $xoopsDB->prefix('tad_gphotos');
+        $result = $xoopsDB->query($sql);
+        if (empty($result)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function go_2()
+    {
+        global $xoopsDB;
+        $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_gphotos') . ' ADD `csn` smallint(5) unsigned NOT NULL default 0';
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    }
 
 }

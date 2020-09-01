@@ -26,8 +26,14 @@ $adminmenu[$i]['desc'] = _MI_TAD_ADMIN_HOME_DESC;
 $adminmenu[$i]['icon'] = 'images/admin/home.png';
 
 $i++;
-$adminmenu[$i]['title'] = _MI_TADGPHOTOS_ADMENU2;
+$adminmenu[$i]['title'] = _MI_TADGPHOTOS_ADMENU1;
 $adminmenu[$i]['link'] = 'admin/main.php';
+$adminmenu[$i]['desc'] = _MI_TADGPHOTOS_ADMENU1_DESC;
+$adminmenu[$i]['icon'] = "images/admin/button.png";
+
+$i++;
+$adminmenu[$i]['title'] = _MI_TADGPHOTOS_ADMENU2;
+$adminmenu[$i]['link'] = 'admin/power.php';
 $adminmenu[$i]['desc'] = _MI_TADGPHOTOS_ADMENU2_DESC;
 $adminmenu[$i]['icon'] = "images/admin/button.png";
 

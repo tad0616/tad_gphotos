@@ -1,42 +1,144 @@
 <?php
+use Xmf\Request;
+use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
-
+use XoopsModules\Tadtools\Ztree;
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = "tad_gphotos_adm_groupperm.tpl";
-include_once "header.php";
-include_once "../function.php";
-include_once XOOPS_ROOT_PATH . "/Frameworks/art/functions.php";
-include_once XOOPS_ROOT_PATH . "/Frameworks/art/functions.admin.php";
-include_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
+$xoopsOption['template_main'] = 'tad_gphotos_admin.tpl';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 
-//取得本模組編號
-$module_id = $xoopsModule->getVar('mid');
+/*-----------function區--------------*/
 
-//頁面標題
-$perm_page_title = _MA_TADGPHOTOS_PERM_TITLE;
+//取得tad_gphotos_cate無窮分類列表
+function list_tad_gphotos_cate_tree($show_csn = 0)
+{
+    global $xoopsTpl, $xoopsDB;
+    $path = get_tad_gphotos_cate_path($show_csn);
+    $path_arr = array_keys($path);
+    $sql = 'SELECT csn,of_csn,title FROM ' . $xoopsDB->prefix('tad_gphotos_cate') . ' ORDER BY `sort`';
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-//取得分類編號及標題
-//權限項目陣列（編號超級重要！設定後，以後切勿隨便亂改。）
-$item_list = array(
-    '1' => _MA_TADGPHOTOS_CREATE_ALBUM,
-);
+    $count = tad_gphotos_cate_count();
+    $data[] = "{ id:0, pId:0, name:'All', url:'index.php', target:'_self', open:true}";
+    while (list($csn, $of_csn, $title) = $xoopsDB->fetchRow($result)) {
+        $font_style = $show_csn == $csn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
+        $open = in_array($csn, $path_arr) ? 'true' : 'false';
+        $display_counter = empty($count[$csn]) ? '' : " ({$count[$csn]})";
+        $data[] = "{ id:{$csn}, pId:{$of_csn}, name:'{$title}{$display_counter}', url:'main.php?csn={$csn}', target:'_self', open:{$open} {$font_style}}";
+    }
+    $json = implode(',', $data);
 
-//頁面標題
-$perm_page_title = _MA_TADGPHOTOS_PERM_TITLE;
-
-//權限名稱（請設定一個英文名稱，一般用模組名稱即可）
-$perm_name = 'tad_gphotos';
-
-//權限描述
-$perm_desc = _MA_TADGPHOTOS_PERM_DESC;
-
-//建立XOOPS權限表單
-$formi = new \XoopsGroupPermForm($perm_page_title, $module_id, $perm_name, $perm_desc);
-
-//將權限項目設進表單中
-foreach ($item_list as $item_id => $item_name) {
-    $formi->addItem($item_id, $item_name);
+    $Ztree = new Ztree('link_tree', $json, 'save_drag.php', 'save_sort.php', 'of_csn', 'csn');
+    $ztree_code = $Ztree->render();
+    $xoopsTpl->assign('ztree_code', $ztree_code);
 }
 
-echo $formi->render();
-include_once 'footer.php';
+//秀出所有分類及相簿
+function list_tad_gphoto($csn = '')
+{
+    global $xoopsDB, $xoopsTpl;
+
+    $and_csn = !empty($csn) ? "and `csn`='{$csn}'" : '';
+    $sql = 'select * from  ' . $xoopsDB->prefix('tad_gphotos') . " where 1 $and_csn order by `album_sort`";
+    //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
+    $PageBar = Utility::getPageBar($sql, 10, 10);
+    $bar = $PageBar['bar'];
+    $sql = $PageBar['sql'];
+    $total = $PageBar['total'];
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $i = 0;
+    $gphotos = [];
+    while (false !== ($data = $xoopsDB->fetchArray($result))) {
+        $gphotos[$i] = $data;
+        $gphotos[$i]['cate'] = get_tad_gphotos_cate($data['csn']);
+        $gphotos[$i]['photo_num'] = tad_gphotos_images_num($data['album_sn']);
+        $i++;
+    }
+    $xoopsTpl->assign('gphotos', $gphotos);
+    $xoopsTpl->assign('bar', $bar);
+    $xoopsTpl->assign('total', $total);
+    $cate = '';
+    if ($csn) {
+        $cate = get_tad_gphotos_cate($csn);
+    }
+    //die(var_export($cate));
+    $xoopsTpl->assign('cate', $cate);
+    $xoopsTpl->assign('csn', $csn);
+
+    Utility::get_jquery(true);
+
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render('delete_tad_gphotos_cate_func', 'main.php?op=delete_tad_gphotos_cate&csn=', 'csn');
+
+    //刪除相簿
+    $SweetAlert2 = new SweetAlert();
+    $SweetAlert2->render('delete_tad_gphotos_func', 'main.php?op=delete_tad_gphotos&csn=', 'csn');
+}
+
+function delete_tad_gphotos_cate($csn)
+{
+    global $xoopsDB, $xoopsTpl;
+    $album = tad_gphotos_cate_count();
+    if ($album[$csn]) {
+        redirect_header($_SERVER['PHP_SELF'], 3, sprintf(_MA_TADGPHOTOS_HAVE_ALBUM, $album[$csn]));
+    }
+
+    $sub_cate = get_tad_gphotos_sub_cate($csn);
+    if ($sub_cate) {
+        redirect_header($_SERVER['PHP_SELF'], 3, sprintf(_MA_TADGPHOTOS_HAVE_SUB_CATE, sizeof($sub_cate)));
+    }
+
+    $sql = 'delete from  ' . $xoopsDB->prefix('tad_gphotos_cate') . " where `csn`='$csn'";
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+}
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+$csn = Request::getInt('csn');
+
+switch ($op) {
+
+    //新增資料
+    case 'insert_tad_gphotos_cate':
+        $csn = insert_tad_gphotos_cate();
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    //更新資料
+    case 'update_tad_gphotos_cate':
+        update_tad_gphotos_cate($csn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    //刪除資料
+    case 'delete_tad_gphotos_cate':
+        delete_tad_gphotos_cate($csn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    //刪除資料
+    case 'delete_tad_gphotos':
+        delete_tad_gphotos($csn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    //輸入表格
+    case 'tad_gphotos_add_cate_form':
+        list_tad_gphotos_cate_tree($csn);
+        tad_gphotos_cate_form($csn);
+        break;
+
+    //預設動作
+    default:
+        list_tad_gphotos_cate_tree($csn);
+        list_tad_gphoto($csn);
+        $op = 'list_tad_gphotos_cate';
+        break;
+        /*---判斷動作請貼在上方---*/
+}
+
+/*-----------秀出結果區--------------*/
+$xoopsTpl->assign("now_op", $op);
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_gphotos/css/module.css');
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/font-awesome/css/font-awesome.css');
+require_once __DIR__ . '/footer.php';
