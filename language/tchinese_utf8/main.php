@@ -59,3 +59,5 @@ define('_MD_TADGPHOTOS_CATE_FORM', '編輯分類');
 define('_MD_TADGPHOTOS_CATE_TITLE', '分類標題');
 define('_MD_TADGPHOTOS_OF_CSN', '所屬分類');
 define('_MD_TADGPHOTOS_CATE_DESCRIPTION', '分類說明');
+
+define('_MD_TADGPHOTOS_URL_ALERT', '請勿使用「https://photos.app.goo.gl」分享網址。\n請使用瀏覽器列上的網址，網址開頭應為「https://photos.google.com/share」');
