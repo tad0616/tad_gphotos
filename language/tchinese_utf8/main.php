@@ -61,3 +61,6 @@ define('_MD_TADGPHOTOS_OF_CSN', '所屬分類');
 define('_MD_TADGPHOTOS_CATE_DESCRIPTION', '分類說明');
 
 define('_MD_TADGPHOTOS_URL_ALERT', '請勿使用「https://photos.app.goo.gl」分享網址。\n請使用瀏覽器列上的網址，網址開頭應為「https://photos.google.com/share」');
+define('_MD_TADGPHOTOS_SORT', '相簿排序方式');
+define('_MD_TADGPHOTOS_SORT_BY_TITLE', '依照相簿名稱排序');
+define('_MD_TADGPHOTOS_SORT_BY_CUSTOM', '依手動拖曳排序');

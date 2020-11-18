@@ -62,7 +62,6 @@ function list_tad_gphoto($csn = '')
     if ($csn) {
         $cate = get_tad_gphotos_cate($csn);
     }
-    //die(var_export($cate));
     $xoopsTpl->assign('cate', $cate);
     $xoopsTpl->assign('csn', $csn);
 

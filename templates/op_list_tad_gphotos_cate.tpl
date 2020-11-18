@@ -13,7 +13,7 @@
         <{/if}>
 
         <div class="text-center">
-            <a href="main.php?op=tad_gphotos_add_cate_form" class="btn btn-info btn-block"><{$smarty.const._MA_TADGPHOTOS_ADD_CATE}></a>
+            <a href="main.php?op=tad_gphotos_add_cate_form" class="btn btn-info btn-block"><i class="fa fa-plus" aria-hidden="true"></i> <{$smarty.const._MA_TADGPHOTOS_ADD_CATE}></a>
         </div>
     </div>
     <div class="col-sm-9">
@@ -28,9 +28,9 @@
                     <div style="margin: 10px 0px;">
                         <{if $now_op!="tad_gphotos_add_cate_form" and $csn}>
                         <span <{if $cate.count > 0 or $cate.sub_cate > 0}>data-toggle="tooltip" data-placement="top" title="<{$smarty.const._MA_TADGPHOTOS_HAVE_SOMETHING|sprintf:$cate.sub_cate:$cate.count}>"<{/if}>>
-                                <a href="javascript:delete_tad_gphotos_cate_func(<{$cate.csn}>);" class="btn btn-sm btn-danger <{if $cate.count > 0 or $cate.sub_cate > 0}>disabled<{/if}>"><{$smarty.const._TAD_DEL}></a>
+                                <a href="javascript:delete_tad_gphotos_cate_func(<{$cate.csn}>);" class="btn btn-sm btn-danger <{if $cate.count > 0 or $cate.sub_cate > 0}>disabled<{/if}>"><i class="fa fa-trash-o" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
                             </span>
-                            <a href="main.php?op=tad_gphotos_add_cate_form&csn=<{$csn}>" class="btn btn-sm btn-warning"><{$smarty.const._TAD_EDIT}></a>
+                            <a href="main.php?op=tad_gphotos_add_cate_form&csn=<{$csn}>" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._TAD_EDIT}></a>
                         <{/if}>
                     </div>
                 </div>
@@ -64,8 +64,8 @@
                                 <td class="c"><{$album.photo_num}></td>
                                 <td class="c"><{$album.create_date}></td>
                                 <td class="c">
-                                    <a href="javascript:delete_tad_gphotos_func(<{$album.album_sn}>);" class="btn btn-sm btn-xs btn-danger" id="del<{$album.album_sn}>"><{$smarty.const._TAD_DEL}></a>
-                                    <a href="<{$xoops_url}>/modules/tad_gphotos/index.php?op=tad_gphotos_form&album_sn=<{$album.album_sn}>" class="btn btn-sm btn-xs btn-info" id="update<{$album.album_sn}>"><{$smarty.const._TAD_EDIT}></a>
+                                    <a href="javascript:delete_tad_gphotos_func(<{$album.album_sn}>);" class="btn btn-sm btn-xs btn-danger" id="del<{$album.album_sn}>"><i class="fa fa-trash-o" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
+                                    <a href="<{$xoops_url}>/modules/tad_gphotos/index.php?op=tad_gphotos_form&album_sn=<{$album.album_sn}>" class="btn btn-sm btn-xs btn-info" id="update<{$album.album_sn}>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._TAD_EDIT}></a>
                                 </td>
                             </tr>
                         <{/foreach}>

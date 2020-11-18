@@ -60,3 +60,7 @@ define('_MD_TADGPHOTOS_OF_CSN', 'category');
 define('_MD_TADGPHOTOS_CATE_DESCRIPTION', 'Category Description');
 
 define('_MD_TADGPHOTOS_URL_ALERT', 'Please do not use "https://photos.app.goo.gl" to share the website. \nPlease use the URL listed on your browser, which should start with "https://photos.google.com/share".');
+
+define('_MD_TADGPHOTOS_SORT', 'Album sorting method');
+define('_MD_TADGPHOTOS_SORT_BY_TITLE', 'sort by album name');
+define('_MD_TADGPHOTOS_SORT_BY_CUSTOM', 'Sort by manual drag and drop');

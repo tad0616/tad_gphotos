@@ -1,6 +1,7 @@
 <?php
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\FormValidator;
+use XoopsModules\Tadtools\TadDataCenter;
 use XoopsModules\Tadtools\Utility;
 /**
  * Tad Gphotos module
@@ -219,6 +220,10 @@ function tad_gphotos_images_num($album_sn)
 function tad_gphotos_cate_form($csn = '')
 {
     global $xoopsDB, $xoopsUser, $xoopsTpl;
+    $TadDataCenter = new TadDataCenter('tad_gphotos');
+    $TadDataCenter->set_col('csn', $csn);
+    $sort_form = $TadDataCenter->getForm('return', 'input', 'sort_kind', 'radio', 'custom', [_MD_TADGPHOTOS_SORT_BY_CUSTOM => 'custom', _MD_TADGPHOTOS_SORT_BY_TITLE => 'title']);
+    $xoopsTpl->assign('sort_form', $sort_form);
 
     //抓取預設值
     $DBV = !empty($csn) ? get_tad_gphotos_cate($csn) : [];
@@ -292,6 +297,9 @@ function insert_tad_gphotos_cate()
     //取得最後新增資料的流水編號
     $csn = $xoopsDB->getInsertId();
 
+    $TadDataCenter = new TadDataCenter('tad_gphotos');
+    $TadDataCenter->set_col('csn', $csn);
+    $TadDataCenter->saveData();
     return $csn;
 }
 
@@ -314,6 +322,9 @@ function update_tad_gphotos_cate($csn = '')
     where csn='$csn'";
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
+    $TadDataCenter = new TadDataCenter('tad_gphotos');
+    $TadDataCenter->set_col('csn', $csn);
+    $TadDataCenter->saveData();
     return $csn;
 }
 

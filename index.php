@@ -3,6 +3,7 @@ use Xmf\Request;
 use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\Jeditable;
 use XoopsModules\Tadtools\SweetAlert;
+use XoopsModules\Tadtools\TadDataCenter;
 use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tad_gphotos\Crawler;
 /**
@@ -113,7 +114,17 @@ function tad_gphotos_list($csn = 0)
     }
     $xoopsTpl->assign('all_cate', $all_cate);
 
-    $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos") . "` where csn='{$csn}' order by album_sort, create_date desc";
+    $TadDataCenter = new TadDataCenter('tad_gphotos');
+    $TadDataCenter->set_col('csn', $csn);
+    $sort_kind = $TadDataCenter->getData('sort_kind', 0);
+    // if ($_GET['test'] == 1) {
+    //     Utility::dd($data);
+    // }
+    // $xoopsTpl->assign('sort_kind', $sort_kind);
+
+    $order = $sort_kind == 'title' ? 'order by album_name' : 'order by album_sort, create_date desc';
+
+    $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos") . "` where csn='{$csn}' $order ";
 
     //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
     $PageBar = Utility::getPageBar($sql, 20, 10);

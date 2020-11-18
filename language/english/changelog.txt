@@ -1,3 +1,8 @@
+tad_gphotos 1.5 (Released 11/18/2020)
+ =================================================
+ 1.Add a URL check to avoid inputting a short URL, which may lead to failure to connect to the original picture.
+ 2.In the category settings, add the album sorting setting.
+
 tad_gphotos 1.4 (Released 2020-08-28)
  =============================================================
  1.Fix the problem that the permission setting does not work correctly.
