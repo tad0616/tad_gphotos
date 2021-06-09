@@ -38,5 +38,9 @@ function xoops_module_update_tad_gphotos($module, $old_version)
         Update::go_2();
     }
 
+    // data_center 加入 sort
+    if (Update::chk_dc_sort()) {
+        Update::go_dc_sort();
+    }
     return true;
 }
