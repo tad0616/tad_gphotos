@@ -45,8 +45,8 @@
             <ul style="list-style: none;">
                 <{foreach from=$block.content item=data}>
                     <li>
-                        <a href="<{$data.image_link}>" data-photo="<{$data.image_link}>" data-sn="<{$data.image_sn}>" target="_blank">
-                            <img src="<{$data.image_url}>" alt="<{if $data.image_description}><{$data.image_description}><{else}><{$block.album_name}><{/if}>" <{if $data.image_description}>title="<{$data.image_description}>"<{/if}>>
+                        <a href="<{$data.image_link}>" data-photo="<{$data.image_link}>" data-sn="<{$data.image_sn}>" target="_blank" style=" color: transparent;">
+                            <img src="<{$data.image_url}>" alt="img_<{$data.image_sn}>"><span class="sr-only"><{if $data.image_description}><{$data.image_description}><{else}><{$block.album_name}><{/if}></span>
                         </a>
                     </li>
                 <{/foreach}>

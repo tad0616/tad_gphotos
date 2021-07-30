@@ -103,7 +103,7 @@ function get_tad_gphotos_cate_path($the_csn = '', $include_self = true)
     global $xoopsDB;
 
     $arr[0]['csn'] = '0';
-    $arr[0]['title'] = "<i class='fa fa-home'></i>";
+    $arr[0]['title'] = "&#xf015;";
     $arr[0]['sub'] = get_tad_gphotos_sub_cate(0);
     if (!empty($the_csn)) {
         $tbl = $xoopsDB->prefix('tad_gphotos_cate');
