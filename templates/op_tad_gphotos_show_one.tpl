@@ -3,7 +3,8 @@
     <{$delete_tad_gphotos_func}>
 <{/if}>
 <h2>
-    <a href="<{$album_url}>" target="_blank"><{$album_name}></a><small style="color:gray;"><{$smarty.const._MA_TADGPHOTOS_IMAGE_TOTAL|sprintf:$total}></small>
+    <{if $album_name}><a href="<{$album_url}>" target="_blank"><{$album_name}></a><{/if}>
+    <small style="color:gray;"><{$smarty.const._MA_TADGPHOTOS_IMAGE_TOTAL|sprintf:$total}></small>
 </h2>
 <div>
     <{if $smarty.session.tad_gphotos_adm or $create_album}>
