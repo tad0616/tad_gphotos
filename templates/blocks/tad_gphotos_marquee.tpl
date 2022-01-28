@@ -46,7 +46,7 @@
                 <{foreach from=$block.content item=data}>
                     <li>
                         <a href="<{$data.image_link}>" data-photo="<{$data.image_link}>" data-sn="<{$data.image_sn}>" target="_blank" style=" color: transparent;">
-                            <img src="<{$data.image_url}>" alt="img_<{$data.image_sn}>"><span class="sr-only"><{if $data.image_description}><{$data.image_description}><{else}><{$block.album_name}><{/if}></span>
+                            <img src="<{$data.image_url}>" alt="img_<{$data.image_sn}>"><span class="sr-only visually-hidden"><{if $data.image_description}><{$data.image_description}><{else}><{$block.album_name}><{/if}></span>
                         </a>
                     </li>
                 <{/foreach}>
@@ -57,7 +57,7 @@
 </div>
 <!--gundong-->
 <script type="text/javascript">GP_ScrollImgLeft<{$block.album_sn}>();</script>
-<div class="text-right">
+<div class="text-right text-end">
     <span class="badge">
         <a href="<{$xoops_url}>/modules/tad_gphotos/index.php?album_sn=<{$block.album_sn}>">more...</a>
     </span>

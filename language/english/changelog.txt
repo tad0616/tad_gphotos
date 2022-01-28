@@ -1,3 +1,7 @@
+tad_gphotos 1.8 (released on 2022-01-28)
+====================================
+1.Support BootStrap5
+
 tad_gphotos 1.7 (released on 2021-08-22)
 ====================================
 1. Fixed for 2021/07 new version of AA accessibility standard
@@ -5,39 +9,39 @@ tad_gphotos 1.7 (released on 2021-08-22)
 
 
 tad_gphotos 1.6 (released on 2021-07-30)
- =================================================
- 1. Avoid the problem that the block cannot get the object when it is loaded for the first time
- 2. Adjust tad_gphotos_data_center field
- 3. Comply with 2021/07 AA accessibility standard
+=================================================
+1. Avoid the problem that the block cannot get the object when it is loaded for the first time
+2. Adjust tad_gphotos_data_center field
+3. Comply with 2021/07 AA accessibility standard
 
 tad_gphotos 1.5 (Released 11/18/2020)
- =================================================
- 1.Add a URL check to avoid inputting a short URL, which may lead to failure to connect to the original picture.
- 2.In the category settings, add the album sorting setting.
+=================================================
+1.Add a URL check to avoid inputting a short URL, which may lead to failure to connect to the original picture.
+2.In the category settings, add the album sorting setting.
 
 tad_gphotos 1.4 (Released 2020-08-28)
- =============================================================
- 1.Fix the problem that the permission setting does not work correctly.
- 2.Fix Google Photo Album syntax capture
- 3.Add Category Function
+=============================================================
+1.Fix the problem that the permission setting does not work correctly.
+2.Fix Google Photo Album syntax capture
+3.Add Category Function
 
 tad_gphotos 1.3 (Released 2020-06-18)
-  ==========================================================
- 1.Fix Google Photo Album syntax capture
- 2. New "Retrieve" function.
- 3. Support for XOOPS 2.5.11.
+==========================================================
+1.Fix Google Photo Album syntax capture
+2. New "Retrieve" function.
+3. Support for XOOPS 2.5.11.
 
 tad_gphotos 1.2 (2020-03-14 released)
-  ==========================================================
+==========================================================
 1. Correction for accessibility 2.0 AA standard
 
 Tad_gphotos 1.1 (2019-10-05 released)
-  ==========================================================
-  1. Fixed the problem that the permission setting could not work correctly.
+==========================================================
+1. Fixed the problem that the permission setting could not work correctly.
 
 
 Tad_gphotos 1.0 (2019-09-26 released)
-  ==========================================================
-  1. Official release
-  2. Quickly import Google Photos albums without taking up space on the site
-  3. Provide a list of albums, seamless marquees, photo album thumbnails, etc.
+==========================================================
+1. Official release
+2. Quickly import Google Photos albums without taking up space on the site
+3. Provide a list of albums, seamless marquees, photo album thumbnails, etc.

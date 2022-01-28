@@ -12,7 +12,7 @@
             </div>
         <{/if}>
 
-        <div class="text-center">
+        <div class="text-center d-grid gap-2">
             <a href="main.php?op=tad_gphotos_add_cate_form" class="btn btn-info btn-block"><i class="fa fa-plus" aria-hidden="true"></i> <{$smarty.const._MA_TADGPHOTOS_ADD_CATE}></a>
         </div>
     </div>
@@ -24,7 +24,7 @@
                         <{$cate.title}>
                     </h3>
                 </div>
-                <div class="col-sm-8 text-right">
+                <div class="col-sm-8 text-right text-end">
                     <div style="margin: 10px 0px;">
                         <{if $now_op!="tad_gphotos_add_cate_form" and $csn}>
                         <span <{if $cate.count > 0 or $cate.sub_cate > 0}>data-toggle="tooltip" data-placement="top" title="<{$smarty.const._MA_TADGPHOTOS_HAVE_SOMETHING|sprintf:$cate.sub_cate:$cate.count}>"<{/if}>>

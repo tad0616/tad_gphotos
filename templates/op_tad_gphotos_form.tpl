@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col-sm-6">
             <!--相簿名稱-->
-            <div class="form-group">
+            <div class="form-group row mb-3">
                 <label class="col-label col-form-label">
                     <{$smarty.const._MD_TADGPHOTOS_ALBUM_NAME}>
                 </label>
@@ -27,7 +27,7 @@
         </div>
         <div class="col-sm-6">
             <!--相簿分類-->
-            <div class="form-group">
+            <div class="form-group row mb-3">
                 <label class="col-label col-form-label">
                     <{$smarty.const._MD_TADGPHOTOS_CSN}>
                 </label>
@@ -42,7 +42,7 @@
     </div>
 
     <!--相簿網址-->
-    <div class="form-group">
+    <div class="form-group row mb-3">
         <label class="col-label col-form-label">
             <{$smarty.const._MD_TADGPHOTOS_ALBUM_URL}>
         </label>

@@ -6,7 +6,7 @@
                 <{$cate.title}>
             </h3>
         </div>
-        <div class="col-sm-8 text-right">
+        <div class="col-sm-8 text-right text-end">
             <div style="margin-top: 10px;">
                 <{if $now_op!="tad_gphotos_add_cate_form" and $csn}>
                     <span <{if $cate.count > 0 or $cate.sub_cate > 0}>data-toggle="tooltip" data-placement="top" title="<{$smarty.const._MA_TADGPHOTOS_HAVE_SOMETHING|sprintf:$cate.sub_cate:$cate.count}>"<{/if}>>
@@ -32,7 +32,7 @@
 <form action="<{$smarty.server.PHP_SELF}>" method="post" id="myForm" enctype="multipart/form-data" role="form">
     <div class="row">
         <div class="col-sm-6">
-            <div class="form-group">
+            <div class="form-group row mb-3">
                 <label class="control-label col-form-label">
                     <{$smarty.const._MD_TADGPHOTOS_CATE_TITLE}>
                 </label>
@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="col-sm-6">
-            <div class="form-group">
+            <div class="form-group row mb-3">
                 <label class="control-label col-form-label">
                     <{$smarty.const._MD_TADGPHOTOS_OF_CSN}>
                 </label>
@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group row mb-3">
         <label class="control-label col-form-label">
             <{$smarty.const._MD_TADGPHOTOS_CATE_DESCRIPTION}>
         </label>
@@ -66,7 +66,7 @@
     </div>
 
 
-    <div class="form-group">
+    <div class="form-group row mb-3">
         <label class="control-label col-form-label">
             <{$smarty.const._MD_TADGPHOTOS_SORT}>
         </label>
