@@ -35,11 +35,11 @@ function tad_gphotos_albums($options)
     //{$options[0]} : 列出幾本項目
     $block['options0'] = $options[0] ? (int) $options[0] : 5;
     //{$options[1]} : 排序依據
-    $block['options1'] = $options[1] ? $options[1] : 'rand()';
+    $block['options1'] = $options[1] ?: 'rand()';
     //{$options[2]} : 排序方式
     $block['options2'] = $options[2];
     //{$options[3]} : 呈現模式
-    $block['display'] = $options[3] ? $options[3] : 'cover';
+    $block['display'] = $options[3] ?: 'cover';
     //{$options[4]} : 縮圖寬度
     $block['width'] = $options[4] ? (int) $options[4] : 150;
     //{$options[5]} : 縮圖高度
@@ -75,17 +75,17 @@ function tad_gphotos_albums_edit($options)
     $options[5] = $options[5] ? (int) $options[5] : 150;
 
     //"排序依據"預設值
-    $selected_1_0 = ($options[1] == 'album_sort') ? 'selected' : '';
-    $selected_1_1 = ($options[1] == 'create_date') ? 'selected' : '';
-    $selected_1_2 = ($options[1] == 'rand()') ? 'selected' : '';
+    $selected_1_0 = ('album_sort' === $options[1]) ? 'selected' : '';
+    $selected_1_1 = ('create_date' === $options[1]) ? 'selected' : '';
+    $selected_1_2 = ('rand()' === $options[1]) ? 'selected' : '';
 
     //"排序方式"預設值
-    $selected_2_0 = ($options[2] == 'desc') ? 'selected' : '';
-    $selected_2_1 = ($options[2] == '') ? 'selected' : '';
+    $selected_2_0 = ('desc' === $options[2]) ? 'selected' : '';
+    $selected_2_1 = ('' == $options[2]) ? 'selected' : '';
 
     //"呈現模式"預設值
-    $selected_3_0 = ($options[3] == 'cover') ? 'selected' : '';
-    $selected_3_1 = ($options[3] == 'text') ? 'selected' : '';
+    $selected_3_0 = ('cover' === $options[3]) ? 'selected' : '';
+    $selected_3_1 = ('text' === $options[3]) ? 'selected' : '';
 
     $form = "
     <ol class='my-form'>
