@@ -1,3 +1,11 @@
+tad_gphotos 2.0 (Released 2023-01-29)
+====================================
+1. Fix the problem of broken photo album caused by too big font size
+
+tad_gphotos 1.9 (released on 2022-08-17)
+====================================
+1.Remove interface_menu.php to avoid overly long navigation columns
+
 tad_gphotos 1.8 (released on 2022-01-28)
 ====================================
 1.Support BootStrap5

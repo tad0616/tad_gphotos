@@ -17,7 +17,7 @@ h2>span.my {
     /* 文字靠左 */
     font-weight: normal;
     /* 不要粗體 */
-    font-family: HanWangMingBlack, jf-openhuninn, 'Noto Sans TC', Mamelon;
+    font-family: HanWangMingBlack, JfOpenhuninn, 'Noto Sans TC', Mamelon;
     /* 字型 */
     background: -webkit-linear-gradient(rgb(89, 112, 134), rgb(33, 51, 51));
     /* 漸層顏色 */
@@ -38,7 +38,7 @@ h5>span.my {
     /* 文字靠左 */
     font-weight: normal;
     /* 不要粗體 */
-    font-family: jf-openhuninn, 'Noto Sans TC', Mamelon;
+    font-family: JfOpenhuninn, 'Noto Sans TC', Mamelon;
     /* 字型 */
     background: -webkit-linear-gradient(rgb(126, 92, 64), rgb(92, 41, 56));
     /* 漸層顏色 */
@@ -53,7 +53,7 @@ h5>span.my {
     /* 文字靠左 */
     font-weight: normal;
     /* 不要粗體 */
-    font-family: jf-openhuninn, 'Noto Sans TC', Mamelon;
+    font-family: JfOpenhuninn, 'Noto Sans TC', Mamelon;
     color: #3a322e;
 }
 

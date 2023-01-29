@@ -29,23 +29,23 @@
                 <{/if}>
             <{elseif $cate.albums_num>=4}>
                 <{if $cate.albums.1.image_url}>
-                    <img src="<{$cate.albums.1.image_url}>" class="thumb-cate-img" style="margin:4px 0px 3px 4px; width: <{$config.polaroid_width/2-6}>px; height: <{$img_height/2-6}>px; " alt="<{$cate.albums.1.image_sn}>"><span class="sr-only visually-hidden"><{$cate.title}></span>
+                    <img src="<{$cate.albums.1.image_url}>" class="thumb-cate-img" style="margin:4px 0px 3px 4px; width: <{$config.polaroid_width/2-7}>px; height: <{$img_height/2-7}>px; " alt="<{$cate.albums.1.image_sn}>"><span class="sr-only visually-hidden"><{$cate.title}></span>
                 <{/if}>
                 <{if $cate.albums.2.image_url}>
-                    <img src="<{$cate.albums.2.image_url}>" class="thumb-cate-img" style="margin:4px 3px 3px 0px; width: <{$config.polaroid_width/2-6}>px; height: <{$img_height/2-6}>px;" alt="<{$cate.albums.2.image_sn}>"><span class="sr-only visually-hidden"><{$cate.title}></span><br>
+                    <img src="<{$cate.albums.2.image_url}>" class="thumb-cate-img" style="margin:4px 3px 3px 0px; width: <{$config.polaroid_width/2-7}>px; height: <{$img_height/2-7}>px;" alt="<{$cate.albums.2.image_sn}>"><span class="sr-only visually-hidden"><{$cate.title}></span><br>
                 <{/if}>
                 <{if $cate.albums.3.image_url}>
-                    <img src="<{$cate.albums.3.image_url}>" class="thumb-cate-img" style="margin:0px 0px 3px 4px; width: <{$config.polaroid_width/2-6}>px; height: <{$img_height/2-6}>px; " alt="<{$cate.albums.3.image_sn}>"><span class="sr-only visually-hidden"><{$cate.title}></span>
+                    <img src="<{$cate.albums.3.image_url}>" class="thumb-cate-img" style="margin:0px 0px 3px 4px; width: <{$config.polaroid_width/2-7}>px; height: <{$img_height/2-7}>px; " alt="<{$cate.albums.3.image_sn}>"><span class="sr-only visually-hidden"><{$cate.title}></span>
                 <{/if}>
                 <{if $cate.albums.4.image_url}>
-                    <img src="<{$cate.albums.4.image_url}>" class="thumb-cate-img" style="margin:0px 3px 3px 0px; width: <{$config.polaroid_width/2-6}>px; height: <{$img_height/2-6}>px; " alt="<{$cate.albums.4.image_sn}>"><span class="sr-only visually-hidden"><{$cate.title}></span>
+                    <img src="<{$cate.albums.4.image_url}>" class="thumb-cate-img" style="margin:0px 3px 3px 0px; width: <{$config.polaroid_width/2-7}>px; height: <{$img_height/2-7}>px; " alt="<{$cate.albums.4.image_sn}>"><span class="sr-only visually-hidden"><{$cate.title}></span>
                 <{/if}>
             <{/if}>
         </a>
         <div class="polaroid-container">
-            <p>
+            <div>
                 <a href="index.php?csn=<{$cate.csn}>"><{$cate.title}></a>
-            </p>
+            </div>
         </div>
     </div>
 <{/foreach}>
