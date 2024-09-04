@@ -1,3 +1,12 @@
+tad_gphotos 2.2 (Released 2024-08-12)
+====================================
+1.Fix the problem of not being able to retrieve Google Photo Album
+
+
+tad_gphotos 2.1 (Released 2023-03-29)
+====================================
+1.Fix the problem of not being able to retrieve Google Photo Album
+
 tad_gphotos 2.0 (Released 2023-01-29)
 ====================================
 1. Fix the problem of broken photo album caused by too big font size

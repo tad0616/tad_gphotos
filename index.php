@@ -265,11 +265,9 @@ function insert_tad_gphotos()
         redirect_header($_SERVER['PHP_SELF'], 3, $error);
     }
 
-    $myts = \MyTextSanitizer::getInstance();
-
     $album_sn = (int) $_POST['album_sn'];
-    $album_url = $myts->addSlashes($_POST['album_url']);
-    $album_name = $myts->addSlashes($_POST['album_name']);
+    $album_url = $xoopsDB->escape($_POST['album_url']);
+    $album_name = $xoopsDB->escape($_POST['album_name']);
     $csn = (int) $_POST['csn'];
     $album_sort = $album_counter = 0;
 
@@ -282,8 +280,8 @@ function insert_tad_gphotos()
     require 'class/Crawler.php';
     $crawler = new Crawler();
     $album = $crawler->getAlbum($album_url);
-    $album_name = !empty($album_name) ? $myts->addSlashes($album_name) : $myts->addSlashes($album['name']);
-    $album_id = $myts->addSlashes($album['id']);
+    $album_name = !empty($album_name) ? $xoopsDB->escape($album_name) : $xoopsDB->escape($album['name']);
+    $album_id = $xoopsDB->escape($album['id']);
 
     $sql = "insert into `" . $xoopsDB->prefix("tad_gphotos") . "` (
         `album_id`,
@@ -345,20 +343,13 @@ function update_tad_gphotos($album_sn = '')
         redirect_header($_SERVER['PHP_SELF'], 3, $error);
     }
 
-    $myts = \MyTextSanitizer::getInstance();
-
-    $album_name = $myts->addSlashes($_POST['album_name']);
-    $album_url = $myts->addSlashes($_POST['album_url']);
+    $album_name = $xoopsDB->escape($_POST['album_name']);
+    $album_url = $xoopsDB->escape($_POST['album_url']);
     $csn = (int) $_POST['csn'];
-
-    // require 'vendor/autoload.php';
-    // $crawler = new Crawler();
-    // $album = $crawler->getAlbum($album_url);
 
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->uid() : "";
     $uid = !empty($_POST['uid']) ? (int) $_POST['uid'] : $uid;
-    $create_date = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
 
     $sql = "update `" . $xoopsDB->prefix("tad_gphotos") . "` set
     `album_name` = '{$album_name}',
@@ -386,19 +377,17 @@ function get_tad_gphotos_rand_image($album_sn = '')
 //新增資料到tad_gphotos_images中
 function insert_tad_gphotos_images($photo = [])
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB;
 
     //判斷目前使用者是否有：建立相簿
     chk_permission();
 
-    $myts = \MyTextSanitizer::getInstance();
-
     $album_sn = (int) $photo['album_sn'];
-    $image_id = $myts->addSlashes($photo['id']);
+    $image_id = $xoopsDB->escape($photo['id']);
     $image_width = (int) $photo['width'];
     $image_height = (int) $photo['height'];
-    $image_url = $myts->addSlashes($photo['url']);
-    $image_description = $myts->addSlashes($photo['description']);
+    $image_url = $xoopsDB->escape($photo['url']);
+    $image_description = $xoopsDB->escape($photo['description']);
 
     $sql = "replace into `" . $xoopsDB->prefix("tad_gphotos_images") . "` (
         `album_sn`,

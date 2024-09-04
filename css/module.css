@@ -157,6 +157,6 @@ div.polaroid-container {
 
 div.polaroid-container>p {
     overflow: hidden;
-    height: 24px;
+    height: 2rem;
     cursor: text;
 }

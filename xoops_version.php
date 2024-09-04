@@ -21,7 +21,8 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADGPHOTOS_NAME;
-$modversion['version'] = '2.0';
+// $modversion['version'] = '2.2';
+$modversion['version'] = $_SESSION['xoops_version'] >= 20511 ? '3.0.0-Stable' : '3.0';
 $modversion['description'] = _MI_TADGPHOTOS_DESC;
 $modversion['author'] = _MI_TADGPHOTOS_AUTHOR;
 $modversion['credits'] = _MI_TADGPHOTOS_CREDITS;
@@ -31,7 +32,7 @@ $modversion['image'] = "images/logo.png";
 $modversion['dirname'] = basename(__DIR__);
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2023-01-29';
+$modversion['release_date'] = '2024-08-12';
 $modversion['module_website_url'] = 'https://www.tad0616.net';
 $modversion['module_website_name'] = _MI_TADGPHOTOS_AUTHOR_WEB;
 $modversion['module_status'] = 'release';

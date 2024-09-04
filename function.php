@@ -281,11 +281,10 @@ function tad_gphotos_cate_max_sort()
 //新增資料到tad_gphotos_cate中
 function insert_tad_gphotos_cate()
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB;
 
-    $myts = \MyTextSanitizer::getInstance();
-    $title = $myts->addSlashes($_POST['title']);
-    $description = $myts->addSlashes($_POST['description']);
+    $title = $xoopsDB->escape($_POST['title']);
+    $description = $xoopsDB->escape($_POST['description']);
     $of_csn = (int) $_POST['of_csn'];
     $sort = (int) $_POST['sort'];
 
@@ -306,11 +305,10 @@ function insert_tad_gphotos_cate()
 //更新tad_gphotos_cate某一筆資料
 function update_tad_gphotos_cate($csn = '')
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB;
 
-    $myts = \MyTextSanitizer::getInstance();
-    $title = $myts->addSlashes($_POST['title']);
-    $description = $myts->addSlashes($_POST['description']);
+    $title = $xoopsDB->escape($_POST['title']);
+    $description = $xoopsDB->escape($_POST['description']);
     $of_csn = (int) $_POST['of_csn'];
     $sort = (int) $_POST['sort'];
 

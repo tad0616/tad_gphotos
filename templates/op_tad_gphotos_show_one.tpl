@@ -19,4 +19,4 @@
 </div>
 <div class="clearfix"></div>
 
-<{includeq file="$xoops_rootpath/modules/$xoops_dirname/templates/op_tad_gphotos_images_list.tpl"}>
+<{include file="$xoops_rootpath/modules/$xoops_dirname/templates/op_tad_gphotos_images_list.tpl"}>

@@ -11,12 +11,10 @@ chk_permission();
 //更新tad_gphotos_images某一筆資料
 function update_tad_gphotos_images($image_sn = '', $col, $value)
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB;
 
-    $myts = \MyTextSanitizer::getInstance();
-
-    $col = $myts->addSlashes($col);
-    $value = $myts->addSlashes($value);
+    $col = $xoopsDB->escape($col);
+    $value = $xoopsDB->escape($value);
 
     $sql = "update `" . $xoopsDB->prefix("tad_gphotos_images") . "` set
     `{$col}` = '{$value}'
@@ -28,7 +26,7 @@ function update_tad_gphotos_images($image_sn = '', $col, $value)
 
 function save_sort($album_sn_arr = [])
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB;
     $sort = 1;
     foreach ($album_sn_arr as $album_sn) {
         $sql = "update " . $xoopsDB->prefix("tad_gphotos") . " set `album_sort`='{$sort}' where `album_sn`='{$album_sn}'";

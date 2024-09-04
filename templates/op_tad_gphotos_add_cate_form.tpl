@@ -7,6 +7,6 @@
         </div>
     </div>
     <div class="col-sm-9">
-        <{includeq file="$xoops_rootpath/modules/tad_gphotos/templates/op_tad_gphotos_cate_form.tpl"}>
+        <{include file="$xoops_rootpath/modules/tad_gphotos/templates/op_tad_gphotos_cate_form.tpl"}>
     </div>
 </div>
