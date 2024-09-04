@@ -39,5 +39,8 @@ foreach ($item_list as $item_id => $item_name) {
     $formi->addItem($item_id, $item_name);
 }
 
-echo $formi->render();
+$permission_content = $formi->render();
+
+$xoopsTpl->assign('permission_content', $permission_content);
+$xoopsTpl->assign('now_op', 'permission');
 include_once 'footer.php';
