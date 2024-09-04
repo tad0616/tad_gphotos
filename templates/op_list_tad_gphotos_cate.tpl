@@ -3,7 +3,7 @@
     <div class="col-sm-3">
         <{$ztree_code}>
 
-        <{if $csn!=""}>
+        <{if $cate}>
             <div>
                 <h3><{$cate.title}></h3>
                 <ul>
@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="col-sm-9">
-        <{if $csn!=""}>
+        <{if $cate}>
             <div class="row">
                 <div class="col-sm-4">
                     <h3>
@@ -48,7 +48,7 @@
         <{if $gphotos}>
             <div id="save_msg"></div>
             <form action="main.php" method="post" role="form">
-                <table class="table table-striped table-bordered table-sm table-condensed">
+                <table class="table table-striped table-bordered">
                     <tr>
                         <th nowrap><{$smarty.const._MA_TADGPHOTOS_TITLE}></th>
                         <th nowrap class="c"><{$smarty.const._MD_TADGPHOTOS_NUMBER_OF_PHOTOS}></th>
