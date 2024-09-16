@@ -75,7 +75,7 @@
 
     <{if $smarty.session.tad_gphotos_adm or $create_album}>
         <div class="text-right text-end">
-            <{if $smarty.get.csn}>
+            <{if $smarty.get.csn|default:false}>
                 <a href="<{$xoops_url}>/modules/tad_gphotos/admin/main.php?op=tad_gphotos_add_cate_form&csn=<{$smarty.get.csn}>" class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._MD_TADGPHOTOS_CATE_FORM}></a>
             <{/if}>
             <a href="<{$xoops_url}>/modules/tad_gphotos/index.php?op=tad_gphotos_form" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> <{$smarty.const._MD_TADGPHOTOS_ADD}></a>
@@ -89,7 +89,7 @@
     </div>
 <{/if}>
 
-<{if $create_album}>
+<{if $create_album|default:false}>
     <script type="text/javascript">
         $(document).ready(function(){
             $('#sort').sortable({ opacity: 0.6, cursor: 'move', update: function() {

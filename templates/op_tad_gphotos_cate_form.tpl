@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <{if $cate.description}>
+    <{if $cate.description|default:false}>
         <div class="row">
             <div class="col-sm-12">
                 <div class="alert alert-success"><{$cate.description}></div>

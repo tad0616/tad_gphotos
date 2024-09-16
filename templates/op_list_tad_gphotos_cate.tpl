@@ -3,7 +3,7 @@
     <div class="col-sm-3">
         <{$ztree_code}>
 
-        <{if $cate}>
+        <{if $cate|default:false}>
             <div>
                 <h3><{$cate.title}></h3>
                 <ul>
@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="col-sm-9">
-        <{if $cate}>
+        <{if $cate|default:false}>
             <div class="row">
                 <div class="col-sm-4">
                     <h3>
@@ -36,7 +36,7 @@
                 </div>
             </div>
 
-            <{if $cate.description}>
+            <{if $cate.description|default:false}>
                 <div class="row"">
                     <div class="col-sm-12">
                         <div class="alert alert-success"><{$cate.description}></div>
@@ -45,7 +45,7 @@
             <{/if}>
         <{/if}>
 
-        <{if $gphotos}>
+        <{if $gphotos|default:false}>
             <div id="save_msg"></div>
             <form action="main.php" method="post" role="form">
                 <table class="table table-striped table-bordered">
