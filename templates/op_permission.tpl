@@ -1,1 +1,1 @@
-<{$permission_content}>
+<{$permission_content|default:''}>

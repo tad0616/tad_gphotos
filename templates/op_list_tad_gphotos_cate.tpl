@@ -1,13 +1,13 @@
 <div id="save_msg"></div>
 <div class="row">
     <div class="col-sm-3">
-        <{$ztree_code}>
+        <{$ztree_code|default:''}>
 
         <{if $cate|default:false}>
             <div>
                 <h3><{$cate.title}></h3>
                 <ul>
-                    <li style="line-height:2;"><{$smarty.const._MA_TADGPHOTOS_COUNT}><{$smarty.const._TAD_FOR}><{$total}></li>
+                    <li style="line-height:2;"><{$smarty.const._MA_TADGPHOTOS_COUNT}><{$smarty.const._TAD_FOR}><{$total|default:''}></li>
                 </ul>
             </div>
         <{/if}>
@@ -30,7 +30,7 @@
                         <span <{if $cate.count > 0 or $cate.sub_cate > 0}>data-toggle="tooltip" data-placement="top" title="<{$smarty.const._MA_TADGPHOTOS_HAVE_SOMETHING|sprintf:$cate.sub_cate:$cate.count}>"<{/if}>>
                                 <a href="javascript:delete_tad_gphotos_cate_func(<{$cate.csn}>);" class="btn btn-sm btn-danger <{if $cate.count > 0 or $cate.sub_cate > 0}>disabled<{/if}>"><i class="fa fa-trash-o" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
                             </span>
-                            <a href="main.php?op=tad_gphotos_add_cate_form&csn=<{$csn}>" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._TAD_EDIT}></a>
+                            <a href="main.php?op=tad_gphotos_add_cate_form&csn=<{$csn|default:''}>" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._TAD_EDIT}></a>
                         <{/if}>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                         <{/foreach}>
                     </tbody>
                 </table>
-                <{$bar}>
+                <{$bar|default:''}>
             </form>
             <script type="text/javascript">
                 $(document).ready(function(){

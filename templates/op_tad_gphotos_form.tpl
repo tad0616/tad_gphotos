@@ -12,7 +12,7 @@
     });
 </script>
 
-<form action="<{$action}>" method="post" id="myForm" enctype="multipart/form-data">
+<form action="<{$action|default:''}>" method="post" id="myForm" enctype="multipart/form-data">
     <div class="row">
         <div class="col-sm-6">
             <!--相簿名稱-->
@@ -21,7 +21,7 @@
                     <{$smarty.const._MD_TADGPHOTOS_ALBUM_NAME}>
                 </label>
                 <div class="">
-                    <input type="text" name="album_name" id="album_name" class="form-control" value="<{$album_name}>" placeholder="<{$smarty.const._MD_TADGPHOTOS_ALBUM_NAME}><{$smarty.const._MD_TADGPHOTOS_ALBUM_NAME_HELP}>">
+                    <input type="text" name="album_name" id="album_name" class="form-control" value="<{$album_name|default:''}>" placeholder="<{$smarty.const._MD_TADGPHOTOS_ALBUM_NAME}><{$smarty.const._MD_TADGPHOTOS_ALBUM_NAME_HELP}>">
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
                 <div class="">
                     <select name="csn" id="csn" class="form-control validate[required]">
                         <option value=""><{$smarty.const._MD_TADGPHOTOS_UNCATEGORIZED}></option>
-                        <{$cate_options}>
+                        <{$cate_options|default:''}>
                     </select>
                 </div>
             </div>
@@ -47,7 +47,7 @@
             <{$smarty.const._MD_TADGPHOTOS_ALBUM_URL}>
         </label>
         <div class="">
-            <input type="text" name="album_url" id="album_url" class="form-control border-primary validate[required , custom[url]]" value="<{$album_url}>" placeholder="<{$smarty.const._MD_TADGPHOTOS_ALBUM_URL_DEMO}>">
+            <input type="text" name="album_url" id="album_url" class="form-control border-primary validate[required , custom[url]]" value="<{$album_url|default:''}>" placeholder="<{$smarty.const._MD_TADGPHOTOS_ALBUM_URL_DEMO}>">
         </div>
     </div>
 
@@ -56,12 +56,12 @@
     </div>
 
     <div class="bar">
-        <input type='hidden' name="uid" value="<{$uid}>">
+        <input type='hidden' name="uid" value="<{$uid|default:''}>">
 
-        <{$token_form}>
+        <{$token_form|default:''}>
 
-        <input type="hidden" name="op" value="<{$next_op}>">
-        <input type="hidden" name="album_sn" value="<{$album_sn}>">
+        <input type="hidden" name="op" value="<{$next_op|default:''}>">
+        <input type="hidden" name="album_sn" value="<{$album_sn|default:''}>">
         <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> <{$smarty.const._TAD_SAVE}></button>
     </div>
 </form>
