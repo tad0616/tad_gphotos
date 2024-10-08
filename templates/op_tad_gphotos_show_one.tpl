@@ -1,4 +1,4 @@
-<{$path|default:''}>
+<{$breadcrumb|default:''}>
 <{if $smarty.session.tad_gphotos_adm or ($create_album and $now_uid==$uid)}>
     <{$delete_tad_gphotos_func|default:''}>
 <{/if}>

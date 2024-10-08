@@ -33,8 +33,3 @@ if (chk_permission('return')) {
     $interface_menu[_MD_TADGPHOTOS_ADD_CATE] = "index.php?op=tad_gphotos_cate_form";
     $interface_icon[_MD_TADGPHOTOS_ADD_CATE] = "fa-plus";
 }
-
-if ($_SESSION['tad_gphotos_adm']) {
-    $interface_menu[_TAD_TO_ADMIN] = "admin/main.php";
-    $interface_icon[_TAD_TO_ADMIN] = "fa-sign-in";
-}

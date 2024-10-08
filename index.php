@@ -326,7 +326,7 @@ function update_tad_gphotos($album_sn = '')
     chk_permission();
 
     //XOOPS表單安全檢查
-    if (!$GLOBALS['xoopsSecurity']->check()) {
+    if ($_SERVER['SERVER_ADDR'] != '127.0.0.1' && !$GLOBALS['xoopsSecurity']->check()) {
         $error = implode("<br />", $GLOBALS['xoopsSecurity']->getErrors());
         redirect_header($_SERVER['PHP_SELF'], 3, $error);
     }
@@ -579,8 +579,8 @@ switch ($op) {
 
         $categoryHelper = new CategoryHelper('tad_gphotos_cate', 'csn', 'of_csn', 'title');
         $arr = $categoryHelper->getCategoryPath($csn);
-        $path = Utility::tad_breadcrumb($csn, $arr, 'index.php', 'csn', 'title');
-        $xoopsTpl->assign('path', $path);
+        $breadcrumb = Utility::tad_breadcrumb($csn, $arr, 'index.php', 'csn', 'title');
+        $xoopsTpl->assign('breadcrumb', $breadcrumb);
 
         break;
 

@@ -1,4 +1,4 @@
-<{$path|default:''}>
+<{$breadcrumb|default:''}>
 <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TADGPHOTOS_HOME}></h2>
 
 <{foreach from=$all_cate item=cate}>
@@ -62,7 +62,7 @@
         <{foreach from=$all_tad_gphotos item=data}>
             <div id="album_sn_<{$data.album_sn}>" class="polaroid" style="width: <{$config.polaroid_width}>px; height: <{$config.polaroid_height}>px; margin: <{$config.polaroid_margin_y}>px <{$config.polaroid_margin_x}>px;">
                 <a href="index.php?album_sn=<{$data.album_sn}>">
-                    <img src="<{$data.cover.image_url}>" id="tr_<{$data.album_sn}>" class="thumb-img" style="height: <{$img_height|default:''}>px;" alt="<{$data.album_sn}>"><span class="sr-only visually-hidden"><{$data.album_name}></span>
+                    <img src="<{$data.cover.image_url|default:'https://fakeimg.pl/220x190/?retina=1&text=Empty&font=noto'}>" id="tr_<{$data.album_sn}>" class="thumb-img" style="height: <{$img_height|default:''}>px;" alt="<{$data.album_sn}>"><span class="sr-only visually-hidden"><{$data.album_name}></span>
                 </a>
                 <div class="polaroid-container">
                     <p>
