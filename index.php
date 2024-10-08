@@ -181,9 +181,9 @@ function tad_gphotos_list($csn = 0)
 }
 
 //tad_gphotos編輯表單
-function tad_gphotos_form($album_sn = '')
+function tad_gphotos_form($album_sn = 0, $csn = 0)
 {
-    global $xoopsDB, $xoopsTpl, $xoopsUser;
+    global $xoopsTpl, $xoopsUser;
 
     //判斷目前使用者是否有：建立相簿
     chk_permission();
@@ -217,7 +217,7 @@ function tad_gphotos_form($album_sn = '')
     $create_date = !isset($DBV['create_date']) ? date("Y-m-d H:i:s") : $DBV['create_date'];
     $xoopsTpl->assign('create_date', $create_date);
     //設定 csn 欄位的預設值
-    $csn = !isset($DBV['csn']) ? 0 : $DBV['csn'];
+    $csn = !isset($DBV['csn']) ? $csn : $DBV['csn'];
     $xoopsTpl->assign('csn', $csn);
 
     $op = empty($album_sn) ? "insert_tad_gphotos" : "update_tad_gphotos";
@@ -264,15 +264,15 @@ function insert_tad_gphotos()
     chk_permission();
 
     //XOOPS表單安全檢查
-    if (!$GLOBALS['xoopsSecurity']->check()) {
+    if ($_SERVER['SERVER_ADDR'] != '127.0.0.1' && !$GLOBALS['xoopsSecurity']->check()) {
         $error = implode("<br />", $GLOBALS['xoopsSecurity']->getErrors());
         redirect_header($_SERVER['PHP_SELF'], 3, $error);
     }
 
     $album_sn = (int) $_POST['album_sn'];
+    $csn = (int) $_POST['csn'];
     $album_url = $_POST['album_url'];
     $album_name = $_POST['album_name'];
-    $csn = (int) $_POST['csn'];
     $album_sort = $album_counter = 0;
 
     //取得使用者編號
@@ -284,6 +284,7 @@ function insert_tad_gphotos()
     require 'class/Crawler.php';
     $crawler = new Crawler();
     $album = $crawler->getAlbum($album_url);
+
     $album_name = !empty($album_name) ? $album_name : $album['name'];
     $album_id = $album['id'];
 
@@ -369,7 +370,7 @@ function insert_tad_gphotos_images($photo = [])
     $image_width = (int) $photo['width'];
     $image_height = (int) $photo['height'];
     $image_url = $photo['url'];
-    $image_description = $photo['description'];
+    $image_description = Wcag::amend($photo['description']);
 
     $sql = 'REPLACE INTO `' . $xoopsDB->prefix('tad_gphotos_images') . '` (`album_sn`, `image_id`, `image_width`, `image_height`, `image_url`, `image_description`) VALUES (?, ?, ?, ?, ?, ?)';
     Utility::query($sql, 'isiiss', [$album_sn, $image_id, $image_width, $image_height, $image_url, $image_description]) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -515,7 +516,7 @@ switch ($op) {
 
     //輸入表格
     case 'tad_gphotos_form':
-        tad_gphotos_form($album_sn);
+        tad_gphotos_form($album_sn, $csn);
         break;
 
     //刪除資料

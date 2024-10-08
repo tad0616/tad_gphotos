@@ -78,14 +78,14 @@
             <{if $smarty.get.csn|default:false}>
                 <a href="<{$xoops_url}>/modules/tad_gphotos/admin/main.php?op=tad_gphotos_add_cate_form&csn=<{$smarty.get.csn|intval}>" class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._MD_TADGPHOTOS_CATE_FORM}></a>
             <{/if}>
-            <a href="<{$xoops_url}>/modules/tad_gphotos/index.php?op=tad_gphotos_form" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> <{$smarty.const._MD_TADGPHOTOS_ADD}></a>
+            <a href="<{$xoops_url}>/modules/tad_gphotos/index.php?op=tad_gphotos_form&csn=<{$smarty.get.csn|intval}>" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> <{$smarty.const._MD_TADGPHOTOS_ADD}></a>
         </div>
     <{/if}>
 
     <{$bar|default:''}>
 <{else}>
     <div class="text-right text-end">
-        <a href="<{$xoops_url}>/modules/tad_gphotos/index.php?op=tad_gphotos_form" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> <{$smarty.const._MD_TADGPHOTOS_ADD}></a>
+        <a href="<{$xoops_url}>/modules/tad_gphotos/index.php?op=tad_gphotos_form&csn=<{$smarty.get.csn|intval}>" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> <{$smarty.const._MD_TADGPHOTOS_ADD}></a>
     </div>
 <{/if}>
 

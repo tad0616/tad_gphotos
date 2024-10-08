@@ -14,7 +14,7 @@
             <a href="<{$xoops_url}>/modules/tad_gphotos/index.php?op=re_get_tad_gphotos&album_sn=<{$album_sn|default:''}>" class="btn btn-info"><i class="fa fa-refresh" aria-hidden="true"></i> <{$smarty.const._MD_TADGPHOTOS_RE_GET}></a>
 
         <{/if}>
-        <a href="<{$xoops_url}>/modules/tad_gphotos/index.php?op=tad_gphotos_form" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> <{$smarty.const._MD_TADGPHOTOS_ADD}></a>
+        <a href="<{$xoops_url}>/modules/tad_gphotos/index.php?op=tad_gphotos_form&csn=<{$smarty.get.csn|intval}>" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> <{$smarty.const._MD_TADGPHOTOS_ADD}></a>
     <{/if}>
 </div>
 <div class="clearfix"></div>

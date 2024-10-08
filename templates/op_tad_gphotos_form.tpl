@@ -13,6 +13,16 @@
 </script>
 
 <form action="<{$action|default:''}>" method="post" id="myForm" enctype="multipart/form-data">
+
+    <!--相簿網址-->
+    <div class="form-group row mb-3">
+        <label class="col-label col-form-label">
+            <{$smarty.const._MD_TADGPHOTOS_ALBUM_URL}>
+        </label>
+        <div class="">
+            <input type="text" name="album_url" id="album_url" class="form-control border-primary validate[required , custom[url]]" value="<{$album_url|default:''}>" placeholder="<{$smarty.const._MD_TADGPHOTOS_ALBUM_URL_DEMO}>">
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-6">
             <!--相簿名稱-->
@@ -38,16 +48,6 @@
                     </select>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!--相簿網址-->
-    <div class="form-group row mb-3">
-        <label class="col-label col-form-label">
-            <{$smarty.const._MD_TADGPHOTOS_ALBUM_URL}>
-        </label>
-        <div class="">
-            <input type="text" name="album_url" id="album_url" class="form-control border-primary validate[required , custom[url]]" value="<{$album_url|default:''}>" placeholder="<{$smarty.const._MD_TADGPHOTOS_ALBUM_URL_DEMO}>">
         </div>
     </div>
 
