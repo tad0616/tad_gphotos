@@ -44,14 +44,25 @@ function tad_gphotos_thumbs($options)
     //{$options[5]} : 縮圖高度
     $block['height'] = $options[5] ? (int) $options[5] : 150;
 
-    $where = !empty($album_sn) ? "where `album_sn` = '{$album_sn}'" : "order by `create_date` desc limit 0,1";
-    $sql = "select `album_sn`, `album_url`, `album_name` from `" . $xoopsDB->prefix("tad_gphotos") . "` $where";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $params = [];
+    $where = "";
+
+    if (!empty($album_sn)) {
+        $where = "WHERE `album_sn` = ?";
+        $params[] = $album_sn;
+    } else {
+        $where = "ORDER BY `create_date` DESC LIMIT 0, 1";
+    }
+
+    $sql = "SELECT `album_sn`, `album_url`, `album_name` FROM `" . $xoopsDB->prefix("tad_gphotos") . "` $where";
+    $result = Utility::query($sql, str_repeat('i', count($params)), $params) or Utility::web_error($sql, __FILE__, __LINE__);
+
     list($album_sn, $album_url, $album_name) = $xoopsDB->fetchRow($result);
     list($url, $key) = explode('?key=', $album_url);
 
-    $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos_images") . "` where `album_sn` = '{$album_sn}' order by {$block['options2']} {$block['options3']} limit 0,{$block['options1']}";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos_images') . '` WHERE `album_sn` = ? ORDER BY ' . $block['options2'] . ' ' . $block['options3'] . ' LIMIT 0, ' . $block['options1'];
+    $result = Utility::query($sql, 'i', [$album_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $content = [];
     while ($all = $xoopsDB->fetchArray($result)) {
         $all['image_link'] = "{$url}/photo/{$all['image_id']}?key={$key}";
@@ -85,8 +96,9 @@ function tad_gphotos_thumbs_edit($options)
     $selected_3_1 = ($options[3] == '') ? 'selected' : '';
 
     //"選擇相簿"預設值
-    $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos") . "` order by create_date desc";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos') . '` ORDER BY `create_date` DESC';
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $opt = '<option value="">' . _MB_TAD_GPHOTOS_LATEST_ALBUM . '</option>';
     while ($album = $xoopsDB->fetchArray($result)) {
         $selected = ($options[0] == $album['album_sn']) ? 'selected' : '';

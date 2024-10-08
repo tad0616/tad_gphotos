@@ -1,6 +1,6 @@
 <?php
 use Xmf\Request;
-
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
 //判斷目前使用者是否有：建立相簿
@@ -13,13 +13,8 @@ function update_tad_gphotos_images($image_sn = '', $col, $value)
 {
     global $xoopsDB;
 
-    $col = $xoopsDB->escape($col);
-    $value = $xoopsDB->escape($value);
-
-    $sql = "update `" . $xoopsDB->prefix("tad_gphotos_images") . "` set
-    `{$col}` = '{$value}'
-    where `image_sn` = '$image_sn'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_gphotos_images') . '` SET `' . $col . '` = ? WHERE `image_sn` = ?';
+    Utility::query($sql, 'si', [$value, $image_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     return $value;
 }
@@ -29,8 +24,9 @@ function save_sort($album_sn_arr = [])
     global $xoopsDB;
     $sort = 1;
     foreach ($album_sn_arr as $album_sn) {
-        $sql = "update " . $xoopsDB->prefix("tad_gphotos") . " set `album_sort`='{$sort}' where `album_sn`='{$album_sn}'";
-        $xoopsDB->queryF($sql) or die(_TAD_SORT_FAIL . " (" . date("Y-m-d H:i:s") . ")" . $sql);
+        $sql = 'UPDATE `' . $xoopsDB->prefix('tad_gphotos') . '` SET `album_sort`=? WHERE `album_sn`=?';
+        Utility::query($sql, 'ii', [$sort, $album_sn]) or die(_TAD_SORT_FAIL . " (" . date('Y-m-d H:i:s') . ")" . $sql);
+
         $sort++;
     }
     return _TAD_SORTED . "(" . date("Y-m-d H:i:s") . ")";

@@ -1,5 +1,6 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadtools\CategoryHelper;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tadtools\Ztree;
@@ -14,12 +15,13 @@ require_once dirname(__DIR__) . '/function.php';
 function list_tad_gphotos_cate_tree($show_csn = 0)
 {
     global $xoopsTpl, $xoopsDB;
-    $path = get_tad_gphotos_cate_path($show_csn);
+    $categoryHelper = new CategoryHelper('tad_gphotos_cate', 'csn', 'of_csn', 'title');
+    $path = $categoryHelper->getCategoryPath($show_csn);
     $path_arr = array_keys($path);
-    $sql = 'SELECT csn,of_csn,title FROM ' . $xoopsDB->prefix('tad_gphotos_cate') . ' ORDER BY `sort`';
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $count = $categoryHelper->getCategoryCount();
 
-    $count = tad_gphotos_cate_count();
+    $sql = 'SELECT `csn`, `of_csn`, `title` FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` ORDER BY `sort`';
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $data[] = "{ id:0, pId:0, name:'All', url:'index.php', target:'_self', open:true}";
     while (list($csn, $of_csn, $title) = $xoopsDB->fetchRow($result)) {
         $font_style = $show_csn == $csn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
@@ -49,9 +51,10 @@ function list_tad_gphoto($csn = '')
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $i = 0;
     $gphotos = [];
+    $categoryHelper = new CategoryHelper('tad_gphotos_cate', 'csn', 'of_csn', 'title');
     while (false !== ($data = $xoopsDB->fetchArray($result))) {
         $gphotos[$i] = $data;
-        $gphotos[$i]['cate'] = get_tad_gphotos_cate($data['csn']);
+        $gphotos[$i]['cate'] = $categoryHelper->getCategory($data['csn']);
         $gphotos[$i]['photo_num'] = tad_gphotos_images_num($data['album_sn']);
         $i++;
     }
@@ -60,7 +63,7 @@ function list_tad_gphoto($csn = '')
     $xoopsTpl->assign('total', $total);
     $cate = '';
     if ($csn) {
-        $cate = get_tad_gphotos_cate($csn);
+        $cate = $categoryHelper->getCategory($csn);
     }
     $xoopsTpl->assign('cate', $cate);
     $xoopsTpl->assign('csn', $csn);
@@ -77,19 +80,21 @@ function list_tad_gphoto($csn = '')
 
 function delete_tad_gphotos_cate($csn)
 {
-    global $xoopsDB, $xoopsTpl;
-    $album = tad_gphotos_cate_count();
+    global $xoopsDB;
+    $categoryHelper = new CategoryHelper('tad_gphotos_cate', 'csn', 'of_csn', 'title');
+    $album = $categoryHelper->getCategoryCount();
     if ($album[$csn]) {
         redirect_header($_SERVER['PHP_SELF'], 3, sprintf(_MA_TADGPHOTOS_HAVE_ALBUM, $album[$csn]));
     }
 
-    $sub_cate = get_tad_gphotos_sub_cate($csn);
+    $sub_cate = $categoryHelper->getSubCategories($csn);
     if ($sub_cate) {
         redirect_header($_SERVER['PHP_SELF'], 3, sprintf(_MA_TADGPHOTOS_HAVE_SUB_CATE, sizeof($sub_cate)));
     }
 
-    $sql = 'delete from  ' . $xoopsDB->prefix('tad_gphotos_cate') . " where `csn`='$csn'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` WHERE `csn`=?';
+    Utility::query($sql, 'i', [$csn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
 }
 /*-----------執行動作判斷區----------*/
 $op = Request::getString('op');

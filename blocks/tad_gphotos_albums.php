@@ -47,13 +47,13 @@ function tad_gphotos_albums($options)
 
     $block['img_height'] = $block['height'] - 30;
 
-    $sql = "select * from `" . $xoopsDB->prefix("tad_gphotos") . "` order by {$block['options1']} {$block['options2']} limit 0,{$block['options0']}";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos') . '` ORDER BY ' . $block['options1'] . ' ' . $block['options2'] . ' LIMIT 0,?';
+    $result = Utility::query($sql, 'i', [$block['options0']]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while ($all = $xoopsDB->fetchArray($result)) {
+        $sql2 = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos_images') . '` WHERE `album_sn` =? ORDER BY RAND() LIMIT 0,1';
+        $result2 = Utility::query($sql2, 'i', [$all['album_sn']]) or Utility::web_error($sql2, __FILE__, __LINE__);
 
-        $sql2 = "select * from `" . $xoopsDB->prefix("tad_gphotos_images") . "` where `album_sn` = '{$all['album_sn']}' order by rand() limit 0,1";
-        $result2 = $xoopsDB->query($sql2) or Utility::web_error($sql2, __FILE__, __LINE__);
         $all['cover'] = $xoopsDB->fetchArray($result2);
 
         $block['content'][] = $all;

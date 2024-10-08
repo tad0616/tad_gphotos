@@ -1,8 +1,11 @@
 <?php
+use XoopsModules\Tadtools\CategoryHelper;
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\TadDataCenter;
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadtools\Wcag;
+
 /**
  * Tad Gphotos module
  *
@@ -27,33 +30,21 @@ function vv($array = [])
     Utility::dd($array);
 }
 
-function get_tad_gphotos_sub_cate($csn = '0')
-{
-    global $xoopsDB;
-    $sql = 'select csn,title from ' . $xoopsDB->prefix('tad_gphotos_cate') . " where of_csn='{$csn}'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    $csn_arr = [];
-    while (list($csn, $title) = $xoopsDB->fetchRow($result)) {
-        $csn_arr[$csn] = $title;
-    }
-
-    return $csn_arr;
-}
-
 function get_tad_gphotos_cate_albums($csn = '0', $limit = 4)
 {
     global $xoopsDB;
 
     $album_arr = [];
     $i = 1;
-    $sql = 'select b.album_sn, b.album_name, c.image_url from ' . $xoopsDB->prefix('tad_gphotos_cate') . " as a
-        join " . $xoopsDB->prefix('tad_gphotos') . " as b on a.csn = b.csn
-        join " . $xoopsDB->prefix('tad_gphotos_images') . " as c on b.album_sn = c.album_sn
-        where a.csn='{$csn}' or a.of_csn='{$csn}'
-        group by b.album_sn
-        order by rand()";
+    $sql = 'SELECT b.album_sn, b.album_name, c.image_url FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` as a
+    JOIN `' . $xoopsDB->prefix('tad_gphotos') . '` as b ON a.csn = b.csn
+    JOIN `' . $xoopsDB->prefix('tad_gphotos_images') . '` as c ON b.album_sn = c.album_sn
+    WHERE a.csn = ? OR a.of_csn = ?
+    GROUP BY b.album_sn
+    ORDER BY rand()';
 
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $result = Utility::query($sql, 'ii', [$csn, $csn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     while (list($album_sn, $album_name, $image_url) = $xoopsDB->fetchRow($result)) {
 
         $album_arr[$i]['album_sn'] = $album_sn;
@@ -63,81 +54,6 @@ function get_tad_gphotos_cate_albums($csn = '0', $limit = 4)
     }
 
     return $album_arr;
-}
-
-//以流水號取得某筆tad_gphotos_cate資料
-function get_tad_gphotos_cate($csn = '')
-{
-    global $xoopsDB;
-    if (empty($csn)) {
-        return;
-    }
-    $albums = tad_gphotos_cate_count();
-    $sub_cate = get_tad_gphotos_sub_cate($csn);
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_gphotos_cate') . " where csn='$csn'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    $data = $xoopsDB->fetchArray($result);
-    $data['sub_cate'] = sizeof($sub_cate);
-    $data['count'] = isset($albums[$csn]) ? $albums[$csn] : 0;
-
-    return $data;
-}
-
-//分類底下的相簿數
-function tad_gphotos_cate_count()
-{
-    global $xoopsDB;
-    $all = [];
-    $sql = 'SELECT csn, count(*) FROM ' . $xoopsDB->prefix('tad_gphotos') . ' GROUP BY csn';
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    while (list($csn, $count) = $xoopsDB->fetchRow($result)) {
-        $all[$csn] = (int) ($count);
-    }
-
-    return $all;
-}
-
-//取得路徑
-function get_tad_gphotos_cate_path($the_csn = '', $include_self = true)
-{
-    global $xoopsDB;
-
-    $arr[0]['csn'] = '0';
-    $arr[0]['title'] = "&#xf015;";
-    $arr[0]['sub'] = get_tad_gphotos_sub_cate(0);
-    if (!empty($the_csn)) {
-        $tbl = $xoopsDB->prefix('tad_gphotos_cate');
-        $sql = "SELECT t1.csn AS lev1, t2.csn as lev2, t3.csn as lev3, t4.csn as lev4, t5.csn as lev5, t6.csn as lev6, t7.csn as lev7
-            FROM `{$tbl}` t1
-            LEFT JOIN `{$tbl}` t2 ON t2.of_csn = t1.csn
-            LEFT JOIN `{$tbl}` t3 ON t3.of_csn = t2.csn
-            LEFT JOIN `{$tbl}` t4 ON t4.of_csn = t3.csn
-            LEFT JOIN `{$tbl}` t5 ON t5.of_csn = t4.csn
-            LEFT JOIN `{$tbl}` t6 ON t6.of_csn = t5.csn
-            LEFT JOIN `{$tbl}` t7 ON t7.of_csn = t6.csn
-            WHERE t1.of_csn = '0'";
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-        while ($all = $xoopsDB->fetchArray($result)) {
-            if (in_array($the_csn, $all)) {
-                //$main.="-";
-                foreach ($all as $csn) {
-                    if (!empty($csn)) {
-                        if (!$include_self and $csn == $the_csn) {
-                            break;
-                        }
-                        $arr[$csn] = get_tad_gphotos_cate($csn);
-                        $arr[$csn]['sub'] = get_tad_gphotos_sub_cate($csn);
-                        if ($csn == $the_csn) {
-                            break;
-                        }
-                    }
-                }
-                break;
-            }
-        }
-    }
-
-    return $arr;
 }
 
 function chk_permission($mode = '')
@@ -160,14 +76,15 @@ function chk_permission($mode = '')
 //取得所有tad_gphotos_cate分類選單的選項（模式 = edit or show,目前分類編號,目前分類的所屬編號）
 function get_tad_gphotos_cate_options($page = '', $mode = 'edit', $default_csn = '0', $default_of_csn = '0', $unselect_level = '', $start_search_sn = '0', $level = 0)
 {
-    global $xoopsDB, $xoopsModule;
+    global $xoopsDB;
 
     $post_permission = chk_permission('return');
 
-    $count = tad_gphotos_cate_count();
+    $categoryHelper = new CategoryHelper('tad_gphotos_cate', 'csn', 'of_csn', 'title');
+    $count = $categoryHelper->getCategoryCount();
 
-    $sql = 'select csn, title from ' . $xoopsDB->prefix('tad_gphotos_cate') . " where of_csn='{$start_search_sn}' order by `sort`";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `csn`, `title` FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` WHERE `of_csn`=? ORDER BY `sort`';
+    $result = Utility::query($sql, 'i', [$start_search_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $prefix = str_repeat('&nbsp;&nbsp;', $level);
     $level++;
@@ -209,8 +126,9 @@ function get_tad_gphotos_cate_options($page = '', $mode = 'edit', $default_csn =
 function tad_gphotos_images_num($album_sn)
 {
     global $xoopsDB;
-    $sql = 'SELECT count(*) FROM ' . $xoopsDB->prefix('tad_gphotos_images') . " where album_sn = '{$album_sn}'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('tad_gphotos_images') . '` WHERE `album_sn` = ?';
+    $result = Utility::query($sql, 'i', [$album_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     list($count) = $xoopsDB->fetchRow($result);
 
     return $count;
@@ -226,7 +144,8 @@ function tad_gphotos_cate_form($csn = '')
     $xoopsTpl->assign('sort_form', $sort_form);
 
     //抓取預設值
-    $DBV = !empty($csn) ? get_tad_gphotos_cate($csn) : [];
+    $categoryHelper = new CategoryHelper('tad_gphotos_cate', 'csn', 'of_csn', 'title');
+    $DBV = !empty($csn) ? $categoryHelper->getCategory($csn) : [];
 
     //預設值設定
 
@@ -270,9 +189,10 @@ function tad_gphotos_cate_form($csn = '')
 //自動取得新排序
 function tad_gphotos_cate_max_sort()
 {
-    global $xoopsDB, $xoopsModule;
-    $sql = 'SELECT max(sort) FROM ' . $xoopsDB->prefix('tad_gphotos_cate') . " WHERE of_csn=''";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    global $xoopsDB;
+    $sql = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` WHERE `of_csn`=?';
+    $result = Utility::query($sql, 'i', [0]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     list($sort) = $xoopsDB->fetchRow($result);
 
     return ++$sort;
@@ -283,15 +203,13 @@ function insert_tad_gphotos_cate()
 {
     global $xoopsDB;
 
-    $title = $xoopsDB->escape($_POST['title']);
-    $description = $xoopsDB->escape($_POST['description']);
+    $title = $_POST['title'];
+    $description = Wcag::amend($_POST['description']);
     $of_csn = (int) $_POST['of_csn'];
     $sort = (int) $_POST['sort'];
 
-    $sql = 'insert into ' . $xoopsDB->prefix('tad_gphotos_cate') . "
-    (`of_csn` , `title` , `sort` , `description`)
-    values('{$of_csn}' , '{$title}' , '{$sort}' , '{$description}')";
-    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_gphotos_cate') . '` (`of_csn`, `title`, `sort`, `description`) VALUES (?, ?, ?, ?)';
+    Utility::query($sql, 'isis', [$of_csn, $title, $sort, $description]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得最後新增資料的流水編號
     $csn = $xoopsDB->getInsertId();
@@ -307,18 +225,13 @@ function update_tad_gphotos_cate($csn = '')
 {
     global $xoopsDB;
 
-    $title = $xoopsDB->escape($_POST['title']);
-    $description = $xoopsDB->escape($_POST['description']);
+    $title = $_POST['title'];
+    $description = Wcag::amend($_POST['description']);
     $of_csn = (int) $_POST['of_csn'];
     $sort = (int) $_POST['sort'];
 
-    $sql = 'update ' . $xoopsDB->prefix('tad_gphotos_cate') . " set
-    `of_csn` = '{$of_csn}' ,
-    `title` = '{$title}' ,
-    `sort` = '{$sort}' ,
-    `description` = '{$description}'
-    where csn='$csn'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_gphotos_cate') . '` SET `of_csn` =?, `title` =?, `sort` =?, `description` =? WHERE `csn` =?';
+    Utility::query($sql, 'isisi', [$of_csn, $title, $sort, $description, $csn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $TadDataCenter = new TadDataCenter('tad_gphotos');
     $TadDataCenter->set_col('csn', $csn);
@@ -340,9 +253,8 @@ function delete_tad_gphotos($album_sn = '')
 
     delete_tad_gphotos_images($album_sn);
 
-    $sql = "delete from `" . $xoopsDB->prefix("tad_gphotos") . "`
-    where `album_sn` = '{$album_sn}'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_gphotos') . '` WHERE `album_sn` = ?';
+    Utility::query($sql, 'i', [$album_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
 }
 
@@ -358,8 +270,7 @@ function delete_tad_gphotos_images($album_sn = '')
         return;
     }
 
-    $sql = "delete from `" . $xoopsDB->prefix("tad_gphotos_images") . "`
-    where `album_sn` = '{$album_sn}'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_gphotos_images') . '` WHERE `album_sn` = ?';
+    Utility::query($sql, 'i', [$album_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
 }
