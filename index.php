@@ -32,6 +32,94 @@ require_once __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'tad_gphotos_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+$album_sn = Request::getInt('album_sn');
+$image_sn = Request::getInt('image_sn');
+$csn = Request::getInt('csn');
+
+switch ($op) {
+    /*---判斷動作請貼在下方---*/
+
+    //輸入表格
+    case 'tad_gphotos_form':
+        tad_gphotos_form($album_sn, $csn);
+        break;
+
+    //刪除資料
+    case 'delete_tad_gphotos':
+        delete_tad_gphotos($album_sn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    case 'tad_gphotos_list':
+        tad_gphotos_list();
+        break;
+
+    case 'tad_gphotos_show_one':
+        tad_gphotos_show_one($album_sn);
+        break;
+
+    //新增資料
+    case 'insert_tad_gphotos':
+        $album_sn = insert_tad_gphotos();
+        header("location: {$_SERVER['PHP_SELF']}?album_sn=$album_sn");
+        exit;
+
+    //更新資料
+    case 'update_tad_gphotos':
+        update_tad_gphotos($album_sn);
+        header("location: {$_SERVER['PHP_SELF']}?album_sn=$album_sn");
+        exit;
+
+    //重新抓取
+    case 're_get_tad_gphotos':
+        re_get_tad_gphotos($album_sn);
+        header("location: {$_SERVER['PHP_SELF']}?album_sn=$album_sn");
+        exit;
+
+    //輸入表格
+    case 'tad_gphotos_cate_form':
+        tad_gphotos_cate_form($csn);
+        break;
+
+    //新增資料
+    case 'insert_tad_gphotos_cate':
+        $csn = insert_tad_gphotos_cate();
+        header("location: {$_SERVER['PHP_SELF']}?csn=$csn");
+        exit;
+
+    //更新資料
+    case 'update_tad_gphotos_cate':
+        update_tad_gphotos_cate($csn);
+        header("location: {$_SERVER['PHP_SELF']}?csn=$csn");
+        exit;
+
+    default:
+        if (empty($album_sn)) {
+            tad_gphotos_list($csn);
+            $op = 'tad_gphotos_list';
+        } else {
+            $csn = tad_gphotos_show_one($album_sn);
+            $op = 'tad_gphotos_show_one';
+        }
+
+        $categoryHelper = new CategoryHelper('tad_gphotos_cate', 'csn', 'of_csn', 'title');
+        $arr = $categoryHelper->getCategoryPath($csn);
+        $breadcrumb = Utility::tad_breadcrumb($csn, $arr, 'index.php', 'csn', 'title');
+        $xoopsTpl->assign('breadcrumb', $breadcrumb);
+
+        break;
+
+        /*---判斷動作請貼在上方---*/
+}
+
+/*-----------秀出結果區--------------*/
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
+$xoopsTpl->assign('now_op', $op);
+$xoTheme->addStylesheet('modules/tad_gphotos/css/module.css');
+require_once XOOPS_ROOT_PATH . '/footer.php';
+
 /*-----------功能函數區--------------*/
 
 //以流水號秀出某筆tad_gphotos資料內容
@@ -504,91 +592,3 @@ function re_get_tad_gphotos($album_sn)
     Utility::query($sql, 'i', [$album_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
 }
-
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$album_sn = Request::getInt('album_sn');
-$image_sn = Request::getInt('image_sn');
-$csn = Request::getInt('csn');
-
-switch ($op) {
-    /*---判斷動作請貼在下方---*/
-
-    //輸入表格
-    case 'tad_gphotos_form':
-        tad_gphotos_form($album_sn, $csn);
-        break;
-
-    //刪除資料
-    case 'delete_tad_gphotos':
-        delete_tad_gphotos($album_sn);
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    case 'tad_gphotos_list':
-        tad_gphotos_list();
-        break;
-
-    case 'tad_gphotos_show_one':
-        tad_gphotos_show_one($album_sn);
-        break;
-
-    //新增資料
-    case 'insert_tad_gphotos':
-        $album_sn = insert_tad_gphotos();
-        header("location: {$_SERVER['PHP_SELF']}?album_sn=$album_sn");
-        exit;
-
-    //更新資料
-    case 'update_tad_gphotos':
-        update_tad_gphotos($album_sn);
-        header("location: {$_SERVER['PHP_SELF']}?album_sn=$album_sn");
-        exit;
-
-    //重新抓取
-    case 're_get_tad_gphotos':
-        re_get_tad_gphotos($album_sn);
-        header("location: {$_SERVER['PHP_SELF']}?album_sn=$album_sn");
-        exit;
-
-    //輸入表格
-    case 'tad_gphotos_cate_form':
-        tad_gphotos_cate_form($csn);
-        break;
-
-    //新增資料
-    case 'insert_tad_gphotos_cate':
-        $csn = insert_tad_gphotos_cate();
-        header("location: {$_SERVER['PHP_SELF']}?csn=$csn");
-        exit;
-
-    //更新資料
-    case 'update_tad_gphotos_cate':
-        update_tad_gphotos_cate($csn);
-        header("location: {$_SERVER['PHP_SELF']}?csn=$csn");
-        exit;
-
-    default:
-        if (empty($album_sn)) {
-            tad_gphotos_list($csn);
-            $op = 'tad_gphotos_list';
-        } else {
-            $csn = tad_gphotos_show_one($album_sn);
-            $op = 'tad_gphotos_show_one';
-        }
-
-        $categoryHelper = new CategoryHelper('tad_gphotos_cate', 'csn', 'of_csn', 'title');
-        $arr = $categoryHelper->getCategoryPath($csn);
-        $breadcrumb = Utility::tad_breadcrumb($csn, $arr, 'index.php', 'csn', 'title');
-        $xoopsTpl->assign('breadcrumb', $breadcrumb);
-
-        break;
-
-        /*---判斷動作請貼在上方---*/
-}
-
-/*-----------秀出結果區--------------*/
-$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign('now_op', $op);
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_gphotos/css/module.css');
-require_once XOOPS_ROOT_PATH . '/footer.php';

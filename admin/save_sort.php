@@ -2,7 +2,8 @@
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 require dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-
+error_reporting(0);
+$xoopsLogger->activated = false;
 $csn = (int) $_POST['csn'];
 $sort = (int) $_POST['sort'];
 $sql = 'UPDATE `' . $xoopsDB->prefix('tad_gphotos_cate') . '` SET `sort`=? WHERE `csn`=?';

@@ -27,7 +27,7 @@ function tad_gphotos_albums($options)
 {
     global $xoopsDB, $xoTheme;
     if ($xoTheme) {
-        $xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_gphotos/css/module.css');
+        $xoTheme->addStylesheet('modules/tad_gphotos/css/module.css');
     } else {
         $block['css'] = '<link rel="stylesheet" href="<{$xoops_url}>/modules/tad_gphotos/css/module.css" type="text/css">';
     }

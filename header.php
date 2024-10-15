@@ -25,11 +25,11 @@ if (!isset($_SESSION['tad_gphotos_adm'])) {
 }
 
 $interface_menu[_MD_TADGPHOTOS_HOME] = "index.php";
-$interface_icon[_MD_TADGPHOTOS_HOME] = "fa-chevron-right";
+$interface_icon[_MD_TADGPHOTOS_HOME] = "fa-picture-o";
 
 if (chk_permission('return')) {
     $interface_menu[_MD_TADGPHOTOS_ADD] = "index.php?op=tad_gphotos_form";
     $interface_icon[_MD_TADGPHOTOS_ADD] = "fa-plus";
     $interface_menu[_MD_TADGPHOTOS_ADD_CATE] = "index.php?op=tad_gphotos_cate_form";
-    $interface_icon[_MD_TADGPHOTOS_ADD_CATE] = "fa-plus";
+    $interface_icon[_MD_TADGPHOTOS_ADD_CATE] = "fa-plus-square-o";
 }

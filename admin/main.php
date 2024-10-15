@@ -9,6 +9,55 @@ $xoopsOption['template_main'] = 'tad_gphotos_admin.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+$csn = Request::getInt('csn');
+
+switch ($op) {
+
+    //新增資料
+    case 'insert_tad_gphotos_cate':
+        $csn = insert_tad_gphotos_cate();
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    //更新資料
+    case 'update_tad_gphotos_cate':
+        update_tad_gphotos_cate($csn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    //刪除資料
+    case 'delete_tad_gphotos_cate':
+        delete_tad_gphotos_cate($csn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    //刪除資料
+    case 'delete_tad_gphotos':
+        delete_tad_gphotos($csn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    //輸入表格
+    case 'tad_gphotos_add_cate_form':
+        list_tad_gphotos_cate_tree($csn);
+        tad_gphotos_cate_form($csn);
+        break;
+
+    //預設動作
+    default:
+        list_tad_gphotos_cate_tree($csn);
+        list_tad_gphoto($csn);
+        $op = 'list_tad_gphotos_cate';
+        break;
+        /*---判斷動作請貼在上方---*/
+}
+
+/*-----------秀出結果區--------------*/
+$xoopsTpl->assign("now_op", $op);
+require_once __DIR__ . '/footer.php';
+
 /*-----------function區--------------*/
 
 //取得tad_gphotos_cate無窮分類列表
@@ -96,51 +145,3 @@ function delete_tad_gphotos_cate($csn)
     Utility::query($sql, 'i', [$csn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
 }
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$csn = Request::getInt('csn');
-
-switch ($op) {
-
-    //新增資料
-    case 'insert_tad_gphotos_cate':
-        $csn = insert_tad_gphotos_cate();
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    //更新資料
-    case 'update_tad_gphotos_cate':
-        update_tad_gphotos_cate($csn);
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    //刪除資料
-    case 'delete_tad_gphotos_cate':
-        delete_tad_gphotos_cate($csn);
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    //刪除資料
-    case 'delete_tad_gphotos':
-        delete_tad_gphotos($csn);
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    //輸入表格
-    case 'tad_gphotos_add_cate_form':
-        list_tad_gphotos_cate_tree($csn);
-        tad_gphotos_cate_form($csn);
-        break;
-
-    //預設動作
-    default:
-        list_tad_gphotos_cate_tree($csn);
-        list_tad_gphoto($csn);
-        $op = 'list_tad_gphotos_cate';
-        break;
-        /*---判斷動作請貼在上方---*/
-}
-
-/*-----------秀出結果區--------------*/
-$xoopsTpl->assign("now_op", $op);
-require_once __DIR__ . '/footer.php';
