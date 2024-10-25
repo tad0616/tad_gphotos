@@ -51,7 +51,7 @@ switch ($op) {
         list_tad_gphoto($csn);
         $op = 'list_tad_gphotos_cate';
         break;
-        /*---判斷動作請貼在上方---*/
+
 }
 
 /*-----------秀出結果區--------------*/

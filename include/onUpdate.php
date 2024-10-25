@@ -1,9 +1,6 @@
 <?php
 use XoopsModules\Tad_gphotos\Update;
 
-if (!class_exists('XoopsModules\Tadtools\Utility')) {
-    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
-}
 if (!class_exists('XoopsModules\Tad_gphotos\Update')) {
     require dirname(__DIR__) . '/preloads/autoloader.php';
 }

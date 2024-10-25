@@ -32,7 +32,7 @@ $perm_name = 'tad_gphotos';
 $perm_desc = _MA_TADGPHOTOS_PERM_DESC;
 
 //建立XOOPS權限表單
-$formi = new \XoopsGroupPermForm($perm_page_title, $module_id, $perm_name, $perm_desc);
+$formi = new \XoopsGroupPermForm($perm_page_title, $module_id, $perm_name, $perm_desc, null, false);
 
 //將權限項目設進表單中
 foreach ($item_list as $item_id => $item_name) {

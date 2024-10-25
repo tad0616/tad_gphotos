@@ -5,7 +5,7 @@ use XoopsModules\Tadtools\Utility;
 require_once __DIR__ . '/header.php';
 //判斷目前使用者是否有：建立相簿
 chk_permission();
-error_reporting(0);
+// 關閉除錯訊息
 $xoopsLogger->activated = false;
 
 /*-----------執行動作判斷區----------*/

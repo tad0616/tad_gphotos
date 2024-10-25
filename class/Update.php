@@ -1,6 +1,8 @@
 <?php
 namespace XoopsModules\Tad_gphotos;
 
+use XoopsModules\Tadtools\Utility;
+
 /**
  * Tad Gphotos module
  *
