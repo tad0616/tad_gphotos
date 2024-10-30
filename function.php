@@ -5,6 +5,7 @@ use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\TadDataCenter;
 use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tadtools\Wcag;
+use XoopsModules\Tad_gphotos\Tools;
 
 /**
  * Tad Gphotos module
@@ -25,60 +26,13 @@ use XoopsModules\Tadtools\Wcag;
  **/
 
 /********************* 自訂函數 *********************/
-function vv($array = [])
-{
-    Utility::dd($array);
-}
-
-function get_tad_gphotos_cate_albums($csn = '0', $limit = 4)
-{
-    global $xoopsDB;
-
-    $album_arr = [];
-    $i = 1;
-    $sql = 'SELECT b.album_sn, b.album_name, c.image_url FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` as a
-    JOIN `' . $xoopsDB->prefix('tad_gphotos') . '` as b ON a.csn = b.csn
-    JOIN `' . $xoopsDB->prefix('tad_gphotos_images') . '` as c ON b.album_sn = c.album_sn
-    WHERE a.csn = ? OR a.of_csn = ?
-    GROUP BY b.album_sn
-    ORDER BY rand()';
-
-    $result = Utility::query($sql, 'ii', [$csn, $csn]) or Utility::web_error($sql, __FILE__, __LINE__);
-
-    while (list($album_sn, $album_name, $image_url) = $xoopsDB->fetchRow($result)) {
-
-        $album_arr[$i]['album_sn'] = $album_sn;
-        $album_arr[$i]['album_name'] = $album_name;
-        $album_arr[$i]['image_url'] = $image_url;
-        $i++;
-    }
-
-    return $album_arr;
-}
-
-function chk_permission($mode = '')
-{
-    global $xoopsTpl, $xoopsUser;
-    $create_album = Utility::power_chk("tad_gphotos", 1);
-    if ($mode == 'return') {
-        $uid = $xoopsUser ? $xoopsUser->uid() : '';
-        if ($xoopsTpl) {
-            $xoopsTpl->assign('now_uid', $uid);
-            $xoopsTpl->assign('create_album', $create_album);
-        }
-        return $create_album;
-    }
-    if (!$create_album) {
-        redirect_header($_SERVER['PHP_SELF'], 3, _TAD_PERMISSION_DENIED);
-    }
-}
 
 //取得所有tad_gphotos_cate分類選單的選項（模式 = edit or show,目前分類編號,目前分類的所屬編號）
 function get_tad_gphotos_cate_options($page = '', $mode = 'edit', $default_csn = '0', $default_of_csn = '0', $unselect_level = '', $start_search_sn = '0', $level = 0)
 {
     global $xoopsDB;
 
-    $post_permission = chk_permission('return');
+    $post_permission = Tools::chk_permission('return');
 
     $categoryHelper = new CategoryHelper('tad_gphotos_cate', 'csn', 'of_csn', 'title');
     $count = $categoryHelper->getCategoryCount();
@@ -122,22 +76,10 @@ function get_tad_gphotos_cate_options($page = '', $mode = 'edit', $default_csn =
     return $main;
 }
 
-//分類底下的相片數
-function tad_gphotos_images_num($album_sn)
-{
-    global $xoopsDB;
-    $sql = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('tad_gphotos_images') . '` WHERE `album_sn` = ?';
-    $result = Utility::query($sql, 'i', [$album_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
-
-    list($count) = $xoopsDB->fetchRow($result);
-
-    return $count;
-}
-
 //tad_gphotos_cate 編輯表單
 function tad_gphotos_cate_form($csn = '')
 {
-    global $xoopsDB, $xoopsUser, $xoopsTpl;
+    global $xoopsTpl;
     $TadDataCenter = new TadDataCenter('tad_gphotos');
     $TadDataCenter->set_col('csn', $csn);
     $sort_form = $TadDataCenter->getForm('return', 'input', 'sort_kind', 'radio', 'custom', [_MD_TADGPHOTOS_SORT_BY_CUSTOM => 'custom', _MD_TADGPHOTOS_SORT_BY_TITLE => 'title']);
@@ -245,7 +187,7 @@ function delete_tad_gphotos($album_sn = '')
     global $xoopsDB;
 
     //判斷目前使用者是否有：建立相簿
-    chk_permission();
+    Tools::chk_permission();
 
     if (empty($album_sn)) {
         return;
@@ -264,7 +206,7 @@ function delete_tad_gphotos_images($album_sn = '')
     global $xoopsDB;
 
     //判斷目前使用者是否有：建立相簿
-    chk_permission();
+    Tools::chk_permission();
 
     if (empty($album_sn)) {
         return;

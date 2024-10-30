@@ -8,6 +8,7 @@ use XoopsModules\Tadtools\TadDataCenter;
 use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tadtools\Wcag;
 use XoopsModules\Tad_gphotos\Crawler;
+use XoopsModules\Tad_gphotos\Tools;
 
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
@@ -155,7 +156,7 @@ function tad_gphotos_show_one($album_sn = '')
     list($url, $key) = explode('?key=', $album_url);
     tad_gphotos_images_list($album_sn, $url, $key);
 
-    if (chk_permission('return')) {
+    if (Tools::chk_permission('return')) {
         Utility::get_jquery(true);
     }
 
@@ -167,7 +168,7 @@ function tad_gphotos_list($csn = 0)
 {
     global $xoopsDB, $xoopsTpl, $xoopsModuleConfig;
 
-    if (chk_permission('return')) {
+    if (Tools::chk_permission('return')) {
         Utility::get_jquery(true);
     }
 
@@ -254,7 +255,7 @@ function tad_gphotos_form($album_sn = 0, $csn = 0)
     global $xoopsTpl, $xoopsUser;
 
     //判斷目前使用者是否有：建立相簿
-    chk_permission();
+    Tools::chk_permission();
 
     //抓取預設值
     if (!empty($album_sn)) {
@@ -329,7 +330,7 @@ function insert_tad_gphotos()
     global $xoopsDB, $xoopsUser;
 
     //判斷目前使用者是否有：建立相簿
-    chk_permission();
+    Tools::chk_permission();
 
     //XOOPS表單安全檢查
     if ($_SERVER['SERVER_ADDR'] != '127.0.0.1' && !$GLOBALS['xoopsSecurity']->check()) {
@@ -391,7 +392,7 @@ function update_tad_gphotos($album_sn = '')
     global $xoopsDB, $xoopsUser;
 
     //判斷目前使用者是否有：建立相簿
-    chk_permission();
+    Tools::chk_permission();
 
     //XOOPS表單安全檢查
     if ($_SERVER['SERVER_ADDR'] != '127.0.0.1' && !$GLOBALS['xoopsSecurity']->check()) {
@@ -431,7 +432,7 @@ function insert_tad_gphotos_images($photo = [])
     global $xoopsDB;
 
     //判斷目前使用者是否有：建立相簿
-    chk_permission();
+    Tools::chk_permission();
 
     $album_sn = (int) $photo['album_sn'];
     $image_id = $photo['id'];
@@ -491,7 +492,7 @@ function tad_gphotos_images_list($album_sn = '', $url = "", $key = "")
         $all_tad_gphotos_images[$i]['image_link'] = "{$url}/photo/{$image_id}?key={$key}";
         $all_tad_gphotos_images[$i]['image_description'] = $image_description;
 
-        if (chk_permission('return')) {
+        if (Tools::chk_permission('return')) {
             $jeditable->setTextCol("#gphoto" . $image_sn, 'ajax.php', '100%', '24px', "{'image_sn': $image_sn, 'op' : 'save_title'}", '');
         }
 
@@ -533,7 +534,7 @@ function re_get_tad_gphotos($album_sn)
     global $xoopsDB;
 
     //判斷目前使用者是否有：建立相簿
-    chk_permission();
+    Tools::chk_permission();
 
     if (empty($album_sn)) {
         return;
@@ -571,4 +572,30 @@ function re_get_tad_gphotos($album_sn)
     $sql = 'UPDATE `' . $xoopsDB->prefix('tad_gphotos') . '` SET `create_date` = NOW() WHERE `album_sn` =?';
     Utility::query($sql, 'i', [$album_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
+}
+
+function get_tad_gphotos_cate_albums($csn = '0', $limit = 4)
+{
+    global $xoopsDB;
+
+    $album_arr = [];
+    $i = 1;
+    $sql = 'SELECT b.album_sn, b.album_name, c.image_url FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` as a
+    JOIN `' . $xoopsDB->prefix('tad_gphotos') . '` as b ON a.csn = b.csn
+    JOIN `' . $xoopsDB->prefix('tad_gphotos_images') . '` as c ON b.album_sn = c.album_sn
+    WHERE a.csn = ? OR a.of_csn = ?
+    GROUP BY b.album_sn
+    ORDER BY rand()';
+
+    $result = Utility::query($sql, 'ii', [$csn, $csn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
+    while (list($album_sn, $album_name, $image_url) = $xoopsDB->fetchRow($result)) {
+
+        $album_arr[$i]['album_sn'] = $album_sn;
+        $album_arr[$i]['album_name'] = $album_name;
+        $album_arr[$i]['image_url'] = $image_url;
+        $i++;
+    }
+
+    return $album_arr;
 }

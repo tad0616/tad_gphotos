@@ -42,7 +42,7 @@
                     <{$smarty.const._MD_TADGPHOTOS_CSN}>
                 </label>
                 <div class="">
-                    <select name="csn" id="csn" class="form-control validate[required]">
+                    <select name="csn" id="csn" class="form-select validate[required]">
                         <option value=""><{$smarty.const._MD_TADGPHOTOS_UNCATEGORIZED}></option>
                         <{$cate_options|default:''}>
                     </select>

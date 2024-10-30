@@ -47,7 +47,7 @@
                     <{$smarty.const._MD_TADGPHOTOS_OF_CSN}>
                 </label>
                 <div class="">
-                    <select name="of_csn" id="of_csn" class="form-control">
+                    <select name="of_csn" id="of_csn" class="form-select">
                         <option value="">/</option>
                         <{$cate_options|default:''}>
                     </select>

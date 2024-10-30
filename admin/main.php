@@ -145,3 +145,15 @@ function delete_tad_gphotos_cate($csn)
     Utility::query($sql, 'i', [$csn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
 }
+
+//分類底下的相片數
+function tad_gphotos_images_num($album_sn)
+{
+    global $xoopsDB;
+    $sql = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('tad_gphotos_images') . '` WHERE `album_sn` = ?';
+    $result = Utility::query($sql, 'i', [$album_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
+    list($count) = $xoopsDB->fetchRow($result);
+
+    return $count;
+}
