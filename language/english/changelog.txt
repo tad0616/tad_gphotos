@@ -30,7 +30,6 @@ tad_gphotos 1.7 (released on 2021-08-22)
 1. Fixed for 2021/07 new version of AA accessibility standard
 2. Adjust the album block to make it centered
 
-
 tad_gphotos 1.6 (released on 2021-07-30)
 =================================================
 1. Avoid the problem that the block cannot get the object when it is loaded for the first time
@@ -61,7 +60,6 @@ tad_gphotos 1.2 (2020-03-14 released)
 Tad_gphotos 1.1 (2019-10-05 released)
 ==========================================================
 1. Fixed the problem that the permission setting could not work correctly.
-
 
 Tad_gphotos 1.0 (2019-09-26 released)
 ==========================================================
