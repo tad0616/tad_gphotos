@@ -1,7 +1,13 @@
+tad_gphotos 3.0 (released on 2024-11-11)
+====================================
+1.Support XOOPS 2.5.11
+2.Support PHP8.1.x
+3. Use $xoopsDB->escape() instead of $myts->addSlashes()
+4. Database syntax parameterization
+
 tad_gphotos 2.2 (Released 2024-08-12)
 ====================================
 1.Fix the problem of not being able to retrieve Google Photo Album
-
 
 tad_gphotos 2.1 (Released 2023-03-29)
 ====================================
