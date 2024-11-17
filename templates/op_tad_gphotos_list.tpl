@@ -53,7 +53,7 @@
 
 
 <{if $all_tad_gphotos }>
-    <{if $smarty.session.tad_gphotos_adm or $create_album}>
+    <{if $tad_gphotos_adm or $create_album}>
         <{$delete_tad_gphotos_func|default:''}>
     <{/if}>
 
@@ -73,7 +73,7 @@
         <{/foreach}>
     </div>
 
-    <{if $smarty.session.tad_gphotos_adm or $create_album}>
+    <{if $tad_gphotos_adm or $create_album}>
         <div class="text-right text-end">
             <{if $smarty.get.csn|default:false}>
                 <a href="<{$xoops_url}>/modules/tad_gphotos/admin/main.php?op=tad_gphotos_add_cate_form&csn=<{$smarty.get.csn|intval}>" class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._MD_TADGPHOTOS_CATE_FORM}></a>

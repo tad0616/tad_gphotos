@@ -1,6 +1,6 @@
 <{if $all_tad_gphotos_images|default:false}>
     <h2 class="sr-only visually-hidden"><{$smarty.const._MD_TADGPHOTOS_HOME}></h2>
-    <{if $smarty.session.tad_gphotos_adm or $create_album}>
+    <{if $tad_gphotos_adm or $create_album}>
         <{$delete_tad_gphotos_images_func|default:''}>
     <{/if}>
 
@@ -21,7 +21,7 @@
 <{else}>
     <h2 class="sr-only visually-hidden"><{$smarty.const._TAD_EMPTY}></h2>
     <div class="jumbotron bg-light p-5 rounded-lg m-3 text-center">
-        <{if $smarty.session.tad_gphotos_adm or $create_album}>
+        <{if $tad_gphotos_adm or $create_album}>
             <a href="<{$xoops_url}>/modules/tad_gphotos/index.php?op=tad_gphotos_form&csn=<{$smarty.get.csn|intval}>" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> <{$smarty.const._MD_TADGPHOTOS_ADD}></a>
         <{else}>
             <h3><{$smarty.const._TAD_EMPTY}></h3>

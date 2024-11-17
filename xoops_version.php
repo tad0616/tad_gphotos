@@ -79,9 +79,9 @@ $modversion['templates'] = [
     ['file' => 'tad_gphotos_index.tpl', 'description' => 'tad_gphotos_index.tpl'],
 ];
 
-//---區塊設定---//
+//---區塊設定 (索引為固定值，若欲刪除區塊記得補上索引，避免區塊重複)---//
 $modversion['blocks'] = [
-    [
+    1 => [
         'file' => 'tad_gphotos_albums.php',
         'name' => _MI_TAD_GPHOTOS_ALBUMS_BLOCK_NAME,
         'description' => _MI_TAD_GPHOTOS_ALBUMS_BLOCK_DESC,
@@ -90,7 +90,7 @@ $modversion['blocks'] = [
         'edit_func' => 'tad_gphotos_albums_edit',
         'options' => '5|album_sort||cover',
     ],
-    [
+    2 => [
         'file' => 'tad_gphotos_marquee.php',
         'name' => _MI_TAD_GPHOTOS_MARQUEE_BLOCK_NAME,
         'description' => _MI_TAD_GPHOTOS_MARQUEE_BLOCK_DESC,
@@ -99,7 +99,7 @@ $modversion['blocks'] = [
         'edit_func' => 'tad_gphotos_marquee_edit',
         'options' => '|12|rand()||150|10',
     ],
-    [
+    3 => [
         'file' => 'tad_gphotos_thumbs.php',
         'name' => _MI_TAD_GPHOTOS_THUMBS_BLOCK_NAME,
         'description' => _MI_TAD_GPHOTOS_THUMBS_BLOCK_DESC,
