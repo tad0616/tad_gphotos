@@ -1,7 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         //
-        $('#album_url').change(function(){
+        $('#album_url').on('change', function(){
             var p=/^https:\/\/photos.app.goo.gl/gi;
             var url=$('#album_url').val();
             if(p.test(url)){
@@ -42,7 +42,7 @@
                     <{$smarty.const._MD_TADGPHOTOS_CSN}>
                 </label>
                 <div class="">
-                    <select name="csn" id="csn" class="form-select validate[required]">
+                    <select name="csn" id="csn" class="form-control form-select validate[required]">
                         <option value=""><{$smarty.const._MD_TADGPHOTOS_UNCATEGORIZED}></option>
                         <{$cate_options|default:''}>
                     </select>
@@ -62,6 +62,6 @@
 
         <input type="hidden" name="op" value="<{$next_op|default:''}>">
         <input type="hidden" name="album_sn" value="<{$album_sn|default:''}>">
-        <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> <{$smarty.const._TAD_SAVE}></button>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-disk" aria-hidden="true"></i> <{$smarty.const._TAD_SAVE}></button>
     </div>
 </form>

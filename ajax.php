@@ -7,6 +7,7 @@ require_once __DIR__ . '/header.php';
 //判斷目前使用者是否有：建立相簿
 Tools::chk_permission();
 // 關閉除錯訊息
+header('HTTP/1.1 200 OK');
 $xoopsLogger->activated = false;
 
 /*-----------執行動作判斷區----------*/

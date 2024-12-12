@@ -145,7 +145,7 @@ function insert_tad_gphotos_cate()
 {
     global $xoopsDB;
 
-    $title = $_POST['title'];
+    $title = (string) $_POST['title'];
     $description = Wcag::amend($_POST['description']);
     $of_csn = (int) $_POST['of_csn'];
     $sort = (int) $_POST['sort'];
@@ -167,7 +167,7 @@ function update_tad_gphotos_cate($csn = '')
 {
     global $xoopsDB;
 
-    $title = $_POST['title'];
+    $title = (string) $_POST['title'];
     $description = Wcag::amend($_POST['description']);
     $of_csn = (int) $_POST['of_csn'];
     $sort = (int) $_POST['sort'];

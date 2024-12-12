@@ -342,8 +342,8 @@ function insert_tad_gphotos()
 
     $album_sn = (int) $_POST['album_sn'];
     $csn = (int) $_POST['csn'];
-    $album_url = $_POST['album_url'];
-    $album_name = $_POST['album_name'];
+    $album_url = (string) $_POST['album_url'];
+    $album_name = (string) $_POST['album_name'];
     $album_sort = $album_counter = 0;
 
     //取得使用者編號
@@ -402,8 +402,8 @@ function update_tad_gphotos($album_sn = '')
         redirect_header($_SERVER['PHP_SELF'], 3, $error);
     }
 
-    $album_name = $_POST['album_name'];
-    $album_url = $_POST['album_url'];
+    $album_name = (string) $_POST['album_name'];
+    $album_url = (string) $_POST['album_url'];
     $csn = (int) $_POST['csn'];
 
     //取得使用者編號
