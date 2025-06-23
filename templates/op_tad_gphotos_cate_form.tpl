@@ -9,8 +9,8 @@
         <div class="col-sm-8 text-right text-end">
             <div style="margin-top: 10px;">
                 <{if $now_op!="tad_gphotos_add_cate_form" and $csn}>
-                    <span <{if $cate.count > 0 or $cate.sub_cate > 0}>data-toggle="tooltip" data-placement="top" title="<{$smarty.const._MA_TADGPHOTOS_HAVE_SOMETHING|sprintf:$cate.sub_cate:$cate.count}>"<{/if}>>
-                        <a href="javascript:delete_tad_gphotos_cate_func(<{$cate.csn}>);" class="btn btn-sm btn-danger <{if $cate.count > 0 or $cate.sub_cate > 0}>disabled<{/if}>" ><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
+                    <span <{if $cate.count > 0 or $cate.sub_cate|@count > 0}>data-toggle="tooltip" data-placement="top" title="<{$smarty.const._MA_TADGPHOTOS_HAVE_SOMETHING|sprintf:$cate.sub_cate:$cate.count}>"<{/if}>>
+                        <a href="javascript:delete_tad_gphotos_cate_func(<{$cate.csn}>);" class="btn btn-sm btn-danger <{if $cate.count > 0 or $cate.sub_cate|@count > 0}>disabled<{/if}>" ><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
                     </span>
                     <a href="main.php?op=tad_gphotos_add_cate_form&csn=<{$csn|default:''}>" class="btn btn-sm btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> <{$smarty.const._MD_TADGPHOTOS_CATE_FORM}></a>
                 <{/if}>

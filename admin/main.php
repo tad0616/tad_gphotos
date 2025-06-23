@@ -10,7 +10,7 @@ require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
+$op  = Request::getString('op');
 $csn = Request::getInt('csn');
 
 switch ($op) {
@@ -66,22 +66,24 @@ function list_tad_gphotos_cate_tree($show_csn = 0)
 {
     global $xoopsTpl, $xoopsDB;
     $categoryHelper = new CategoryHelper('tad_gphotos_cate', 'csn', 'of_csn', 'title');
-    $path = $categoryHelper->getCategoryPath($show_csn);
-    $path_arr = array_keys($path);
-    $count = $categoryHelper->getCategoryCount();
+    $path           = $categoryHelper->getCategoryPath($show_csn, 'tad_gphotos');
+    $path_arr       = array_keys($path);
+    $count          = $categoryHelper->getCategoryCount('tad_gphotos');
 
-    $sql = 'SELECT `csn`, `of_csn`, `title` FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` ORDER BY `sort`';
+    $sql    = 'SELECT `csn`, `of_csn`, `title` FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` ORDER BY `sort`';
     $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $data[] = "{ id:0, pId:0, name:'All', url:'index.php', target:'_self', open:true}";
     while (list($csn, $of_csn, $title) = $xoopsDB->fetchRow($result)) {
-        $font_style = $show_csn == $csn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
-        $open = in_array($csn, $path_arr) ? 'true' : 'false';
+        $font_style      = $show_csn == $csn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
+        $open            = in_array($csn, $path_arr) ? 'true' : 'false';
         $display_counter = empty($count[$csn]) ? '' : " ({$count[$csn]})";
-        $data[] = "{ id:{$csn}, pId:{$of_csn}, name:'{$title}{$display_counter}', url:'main.php?csn={$csn}', target:'_self', open:{$open} {$font_style}}";
+        $title           = addslashes($title);
+        $data[]          = "{ id:{$csn}, pId:{$of_csn}, name:'{$title}{$display_counter}', url:'main.php?csn={$csn}', target:'_self', open:{$open} {$font_style}}";
     }
+    Utility::test($count, 'count', 'dd');
     $json = implode(',', $data);
 
-    $Ztree = new Ztree('link_tree', $json, 'save_drag.php', 'save_sort.php', 'of_csn', 'csn');
+    $Ztree      = new Ztree('link_tree', $json, 'save_drag.php', 'save_sort.php', 'of_csn', 'csn');
     $ztree_code = $Ztree->render();
     $xoopsTpl->assign('ztree_code', $ztree_code);
 }
@@ -92,19 +94,19 @@ function list_tad_gphoto($csn = '')
     global $xoopsDB, $xoopsTpl;
 
     $and_csn = !empty($csn) ? "and `csn`='{$csn}'" : '';
-    $sql = 'select * from  ' . $xoopsDB->prefix('tad_gphotos') . " where 1 $and_csn order by `album_sort`";
+    $sql     = 'select * from  ' . $xoopsDB->prefix('tad_gphotos') . " where 1 $and_csn order by `album_sort`";
     //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-    $PageBar = Utility::getPageBar($sql, 10, 10);
-    $bar = $PageBar['bar'];
-    $sql = $PageBar['sql'];
-    $total = $PageBar['total'];
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    $i = 0;
-    $gphotos = [];
+    $PageBar        = Utility::getPageBar($sql, 10, 10);
+    $bar            = $PageBar['bar'];
+    $sql            = $PageBar['sql'];
+    $total          = $PageBar['total'];
+    $result         = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $i              = 0;
+    $gphotos        = [];
     $categoryHelper = new CategoryHelper('tad_gphotos_cate', 'csn', 'of_csn', 'title');
     while (false !== ($data = $xoopsDB->fetchArray($result))) {
-        $gphotos[$i] = $data;
-        $gphotos[$i]['cate'] = $categoryHelper->getCategory($data['csn']);
+        $gphotos[$i]              = $data;
+        $gphotos[$i]['cate']      = $categoryHelper->getCategory($data['csn'], 'tad_gphotos');
         $gphotos[$i]['photo_num'] = tad_gphotos_images_num($data['album_sn']);
         $i++;
     }
@@ -113,8 +115,9 @@ function list_tad_gphoto($csn = '')
     $xoopsTpl->assign('total', $total);
     $cate = '';
     if ($csn) {
-        $cate = $categoryHelper->getCategory($csn);
+        $cate = $categoryHelper->getCategory($csn, 'tad_gphotos');
     }
+    // Utility::test($cate, 'cate', 'dd');
     $xoopsTpl->assign('cate', $cate);
     $xoopsTpl->assign('csn', $csn);
 
@@ -132,7 +135,7 @@ function delete_tad_gphotos_cate($csn)
 {
     global $xoopsDB;
     $categoryHelper = new CategoryHelper('tad_gphotos_cate', 'csn', 'of_csn', 'title');
-    $album = $categoryHelper->getCategoryCount();
+    $album          = $categoryHelper->getCategoryCount('tad_gphotos');
     if ($album[$csn]) {
         redirect_header($_SERVER['PHP_SELF'], 3, sprintf(_MA_TADGPHOTOS_HAVE_ALBUM, $album[$csn]));
     }
@@ -151,7 +154,7 @@ function delete_tad_gphotos_cate($csn)
 function tad_gphotos_images_num($album_sn)
 {
     global $xoopsDB;
-    $sql = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('tad_gphotos_images') . '` WHERE `album_sn` = ?';
+    $sql    = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('tad_gphotos_images') . '` WHERE `album_sn` = ?';
     $result = Utility::query($sql, 'i', [$album_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     list($count) = $xoopsDB->fetchRow($result);

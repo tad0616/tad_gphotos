@@ -16,10 +16,10 @@ $GLOBALS['xoopsOption']['template_main'] = 'tad_gphotos_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
+$op       = Request::getString('op');
 $album_sn = Request::getInt('album_sn');
 $image_sn = Request::getInt('image_sn');
-$csn = Request::getInt('csn');
+$csn      = Request::getInt('csn');
 
 switch ($op) {
 
@@ -83,12 +83,12 @@ switch ($op) {
             $op = 'tad_gphotos_list';
         } else {
             $csn = tad_gphotos_show_one($album_sn);
-            $op = 'tad_gphotos_show_one';
+            $op  = 'tad_gphotos_show_one';
         }
 
         $categoryHelper = new CategoryHelper('tad_gphotos_cate', 'csn', 'of_csn', 'title');
-        $arr = $categoryHelper->getCategoryPath($csn);
-        $breadcrumb = Utility::tad_breadcrumb($csn, $arr, 'index.php', 'csn', 'title');
+        $arr            = $categoryHelper->getCategoryPath($csn, 'tad_gphotos');
+        $breadcrumb     = Utility::tad_breadcrumb($csn, $arr, 'index.php', 'csn', 'title');
         $xoopsTpl->assign('breadcrumb', $breadcrumb);
 
         break;
@@ -100,7 +100,7 @@ $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, 
 $xoopsTpl->assign('now_op', $op);
 $xoopsTpl->assign('tad_gphotos_adm', $tad_gphotos_adm);
 
-$xoTheme->addStylesheet('modules/tad_gphotos/css/module.css');
+$xoTheme->addStylesheet('modules/tad_gphotos/css/module.css?t=' . time());
 require_once XOOPS_ROOT_PATH . '/footer.php';
 
 /*-----------功能函數區--------------*/
@@ -119,7 +119,7 @@ function tad_gphotos_show_one($album_sn = '')
 
     $myts = \MyTextSanitizer::getInstance();
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos') . '` WHERE `album_sn` =?';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos') . '` WHERE `album_sn` =?';
     $result = Utility::query($sql, 'i', [$album_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $all = $xoopsDB->fetchArray($result);
@@ -137,7 +137,7 @@ function tad_gphotos_show_one($album_sn = '')
 
     //過濾讀出的變數值
     $album_name = $myts->htmlSpecialChars($album_name);
-    $album_url = $myts->htmlSpecialChars($album_url);
+    $album_url  = $myts->htmlSpecialChars($album_url);
 
     $xoopsTpl->assign('album_sn', $album_sn);
     $xoopsTpl->assign('album_id', $album_id);
@@ -178,14 +178,14 @@ function tad_gphotos_list($csn = 0)
 
     // 取得分類
     $all_cate = [];
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` WHERE `of_csn`=? ORDER BY `sort`';
-    $result = Utility::query($sql, 'i', [$csn]) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql      = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` WHERE `of_csn`=? ORDER BY `sort`';
+    $result   = Utility::query($sql, 'i', [$csn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while ($all = $xoopsDB->fetchArray($result)) {
-        $albums = get_tad_gphotos_cate_albums($all['csn']);
-        $all['albums'] = $albums;
+        $albums            = get_tad_gphotos_cate_albums($all['csn']);
+        $all['albums']     = $albums;
         $all['albums_num'] = sizeof($albums);
-        $all_cate[] = $all;
+        $all_cate[]        = $all;
     }
     $xoopsTpl->assign('all_cate', $all_cate);
 
@@ -203,14 +203,14 @@ function tad_gphotos_list($csn = 0)
 
     //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
     $PageBar = Utility::getPageBar($sql, 20, 10);
-    $bar = $PageBar['bar'];
-    $sql = $PageBar['sql'];
-    $total = $PageBar['total'];
+    $bar     = $PageBar['bar'];
+    $sql     = $PageBar['sql'];
+    $total   = $PageBar['total'];
 
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $all_tad_gphotos = array();
-    $i = 0;
+    $i               = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
         $all_tad_gphotos[$i] = $all;
         //以下會產生這些變數： $album_sn, $album_id, $album_name, $album_url, $uid, $create_date
@@ -225,16 +225,16 @@ function tad_gphotos_list($csn = 0)
         }
 
         //過濾讀出的變數值
-        $album_name = $myts->htmlSpecialChars($album_name);
-        $album_url = $myts->htmlSpecialChars($album_url);
-        $all_tad_gphotos[$i]['album_sn'] = $album_sn;
-        $all_tad_gphotos[$i]['album_id'] = $album_id;
-        $all_tad_gphotos[$i]['album_name'] = $album_name;
-        $all_tad_gphotos[$i]['album_url'] = $album_url;
-        $all_tad_gphotos[$i]['uid'] = $uid;
-        $all_tad_gphotos[$i]['uid_name'] = $uid_name;
+        $album_name                         = $myts->htmlSpecialChars($album_name);
+        $album_url                          = $myts->htmlSpecialChars($album_url);
+        $all_tad_gphotos[$i]['album_sn']    = $album_sn;
+        $all_tad_gphotos[$i]['album_id']    = $album_id;
+        $all_tad_gphotos[$i]['album_name']  = $album_name;
+        $all_tad_gphotos[$i]['album_url']   = $album_url;
+        $all_tad_gphotos[$i]['uid']         = $uid;
+        $all_tad_gphotos[$i]['uid_name']    = $uid_name;
         $all_tad_gphotos[$i]['create_date'] = $create_date;
-        $all_tad_gphotos[$i]['cover'] = get_tad_gphotos_rand_image($album_sn);
+        $all_tad_gphotos[$i]['cover']       = get_tad_gphotos_rand_image($album_sn);
         $i++;
     }
 
@@ -282,7 +282,7 @@ function tad_gphotos_form($album_sn = 0, $csn = 0)
     $xoopsTpl->assign('album_url', $album_url);
     //設定 uid 欄位的預設值
     $user_uid = $xoopsUser ? $xoopsUser->uid() : "";
-    $uid = !isset($DBV['uid']) ? $user_uid : $DBV['uid'];
+    $uid      = !isset($DBV['uid']) ? $user_uid : $DBV['uid'];
     $xoopsTpl->assign('uid', $uid);
     //設定 create_date 欄位的預設值
     $create_date = !isset($DBV['create_date']) ? date("Y-m-d H:i:s") : $DBV['create_date'];
@@ -303,7 +303,7 @@ function tad_gphotos_form($album_sn = 0, $csn = 0)
 
     //加入Token安全機制
     include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-    $token = new \XoopsFormHiddenToken();
+    $token      = new \XoopsFormHiddenToken();
     $token_form = $token->render();
     $xoopsTpl->assign("token_form", $token_form);
     $xoopsTpl->assign('action', $_SERVER["PHP_SELF"]);
@@ -319,7 +319,7 @@ function get_tad_gphotos($album_sn = '')
         return;
     }
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos') . '` WHERE `album_sn` = ?';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos') . '` WHERE `album_sn` = ?';
     $result = Utility::query($sql, 'i', [$album_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $data = $xoopsDB->fetchArray($result);
@@ -340,24 +340,24 @@ function insert_tad_gphotos()
         redirect_header($_SERVER['PHP_SELF'], 3, $error);
     }
 
-    $album_sn = (int) $_POST['album_sn'];
-    $csn = (int) $_POST['csn'];
-    $album_url = (string) $_POST['album_url'];
+    $album_sn   = (int) $_POST['album_sn'];
+    $csn        = (int) $_POST['csn'];
+    $album_url  = (string) $_POST['album_url'];
     $album_name = (string) $_POST['album_name'];
     $album_sort = $album_counter = 0;
 
     //取得使用者編號
-    $uid = ($xoopsUser) ? $xoopsUser->uid() : "";
-    $uid = !empty($_POST['uid']) ? (int) $_POST['uid'] : $uid;
+    $uid         = ($xoopsUser) ? $xoopsUser->uid() : "";
+    $uid         = !empty($_POST['uid']) ? (int) $_POST['uid'] : $uid;
     $create_date = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
 
     require 'vendor/autoload.php';
     require 'class/Crawler.php';
     $crawler = new Crawler();
-    $album = $crawler->getAlbum($album_url);
+    $album   = $crawler->getAlbum($album_url);
 
     $album_name = !empty($album_name) ? $album_name : $album['name'];
-    $album_id = $album['id'];
+    $album_id   = $album['id'];
 
     $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_gphotos') . '` (`album_id`, `album_name`, `album_url`, `album_sort`, `album_counter`, `uid`, `create_date`, `csn`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
     Utility::query($sql, 'issiiisi', [$album_id, $album_name, $album_url, $album_sort, $album_counter, $uid, $create_date, $csn]) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -403,8 +403,8 @@ function update_tad_gphotos($album_sn = '')
     }
 
     $album_name = (string) $_POST['album_name'];
-    $album_url = (string) $_POST['album_url'];
-    $csn = (int) $_POST['csn'];
+    $album_url  = (string) $_POST['album_url'];
+    $csn        = (int) $_POST['csn'];
 
     //取得使用者編號
     $uid = ($xoopsUser) ? $xoopsUser->uid() : "";
@@ -421,7 +421,7 @@ function get_tad_gphotos_rand_image($album_sn = '')
 {
     global $xoopsDB;
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos_images') . '` WHERE `album_sn` = ? ORDER BY RAND() LIMIT 0,1';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos_images') . '` WHERE `album_sn` = ? ORDER BY RAND() LIMIT 0,1';
     $result = Utility::query($sql, 'i', [$album_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $data = $xoopsDB->fetchArray($result);
@@ -436,11 +436,11 @@ function insert_tad_gphotos_images($photo = [])
     //判斷目前使用者是否有：建立相簿
     Tools::chk_permission();
 
-    $album_sn = (int) $photo['album_sn'];
-    $image_id = $photo['id'];
-    $image_width = (int) $photo['width'];
-    $image_height = (int) $photo['height'];
-    $image_url = $photo['url'];
+    $album_sn          = (int) $photo['album_sn'];
+    $image_id          = $photo['id'];
+    $image_width       = (int) $photo['width'];
+    $image_height      = (int) $photo['height'];
+    $image_url         = $photo['url'];
     $image_description = Wcag::amend($photo['description']);
 
     $sql = 'REPLACE INTO `' . $xoopsDB->prefix('tad_gphotos_images') . '` (`album_sn`, `image_id`, `image_width`, `image_height`, `image_url`, `image_description`) VALUES (?, ?, ?, ?, ?, ?)';
@@ -463,16 +463,16 @@ function tad_gphotos_images_list($album_sn = '', $url = "", $key = "")
 
     //Utility::getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
     $PageBar = Utility::getPageBar($sql, 48, 10);
-    $bar = $PageBar['bar'];
-    $sql = $PageBar['sql'];
-    $total = $PageBar['total'];
+    $bar     = $PageBar['bar'];
+    $sql     = $PageBar['sql'];
+    $total   = $PageBar['total'];
 
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得分類所有資料陣列
-    $tad_gphotos_arr = get_tad_gphotos_all();
+    $tad_gphotos_arr        = get_tad_gphotos_all();
     $all_tad_gphotos_images = array();
-    $i = 0;
+    $i                      = 0;
 
     $jeditable = new Jeditable();
     while ($all = $xoopsDB->fetchArray($result)) {
@@ -485,13 +485,13 @@ function tad_gphotos_images_list($album_sn = '', $url = "", $key = "")
         //過濾讀出的變數值
         $image_description = $myts->displayTarea($image_description, 0, 1, 0, 1, 1);
 
-        $all_tad_gphotos_images[$i]['image_sn'] = $image_sn;
-        $all_tad_gphotos_images[$i]['album_sn'] = $tad_gphotos_arr[$album_sn]['album_name'];
-        $all_tad_gphotos_images[$i]['image_id'] = $image_id;
-        $all_tad_gphotos_images[$i]['image_width'] = $image_width;
-        $all_tad_gphotos_images[$i]['image_height'] = $image_height;
-        $all_tad_gphotos_images[$i]['image_url'] = $image_url;
-        $all_tad_gphotos_images[$i]['image_link'] = "{$url}/photo/{$image_id}?key={$key}";
+        $all_tad_gphotos_images[$i]['image_sn']          = $image_sn;
+        $all_tad_gphotos_images[$i]['album_sn']          = $tad_gphotos_arr[$album_sn]['album_name'];
+        $all_tad_gphotos_images[$i]['image_id']          = $image_id;
+        $all_tad_gphotos_images[$i]['image_width']       = $image_width;
+        $all_tad_gphotos_images[$i]['image_height']      = $image_height;
+        $all_tad_gphotos_images[$i]['image_url']         = $image_url;
+        $all_tad_gphotos_images[$i]['image_link']        = "{$url}/photo/{$image_id}?key={$key}";
         $all_tad_gphotos_images[$i]['image_description'] = $image_description;
 
         if (Tools::chk_permission('return')) {
@@ -519,12 +519,12 @@ function tad_gphotos_images_list($album_sn = '', $url = "", $key = "")
 function get_tad_gphotos_all()
 {
     global $xoopsDB;
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos') . '`';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos') . '`';
     $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $data_arr = array();
     while ($data = $xoopsDB->fetchArray($result)) {
-        $album_sn = $data['album_sn'];
+        $album_sn            = $data['album_sn'];
         $data_arr[$album_sn] = $data;
     }
     return $data_arr;
@@ -542,7 +542,7 @@ function re_get_tad_gphotos($album_sn)
         return;
     }
 
-    $sql = 'SELECT `image_id`, `image_description` FROM `' . $xoopsDB->prefix('tad_gphotos_images') . '` WHERE `album_sn`=?';
+    $sql    = 'SELECT `image_id`, `image_description` FROM `' . $xoopsDB->prefix('tad_gphotos_images') . '` WHERE `album_sn`=?';
     $result = Utility::query($sql, 'i', [$album_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得分類所有資料陣列
@@ -554,7 +554,7 @@ function re_get_tad_gphotos($album_sn)
 
     delete_tad_gphotos_images($album_sn);
 
-    $sql = 'SELECT `album_url` FROM `' . $xoopsDB->prefix('tad_gphotos') . '` WHERE `album_sn` =?';
+    $sql    = 'SELECT `album_url` FROM `' . $xoopsDB->prefix('tad_gphotos') . '` WHERE `album_sn` =?';
     $result = Utility::query($sql, 'i', [$album_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     list($album_url) = $xoopsDB->fetchRow($result);
@@ -562,11 +562,11 @@ function re_get_tad_gphotos($album_sn)
     require 'vendor/autoload.php';
     require 'class/Crawler.php';
     $crawler = new Crawler();
-    $album = $crawler->getAlbum($album_url);
+    $album   = $crawler->getAlbum($album_url);
 
     foreach ($album['images'] as $photo) {
-        $photo['album_sn'] = $album_sn;
-        $image_id = $photo['id'];
+        $photo['album_sn']    = $album_sn;
+        $image_id             = $photo['id'];
         $photo['description'] = Wcag::amend($image_description_arr[$image_id]);
         insert_tad_gphotos_images($photo);
     }
@@ -581,8 +581,8 @@ function get_tad_gphotos_cate_albums($csn = '0', $limit = 4)
     global $xoopsDB;
 
     $album_arr = [];
-    $i = 1;
-    $sql = 'SELECT b.album_sn, b.album_name, c.image_url FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` as a
+    $i         = 1;
+    $sql       = 'SELECT b.album_sn, b.album_name, c.image_url FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` as a
     JOIN `' . $xoopsDB->prefix('tad_gphotos') . '` as b ON a.csn = b.csn
     JOIN `' . $xoopsDB->prefix('tad_gphotos_images') . '` as c ON b.album_sn = c.album_sn
     WHERE a.csn = ? OR a.of_csn = ?
@@ -593,9 +593,9 @@ function get_tad_gphotos_cate_albums($csn = '0', $limit = 4)
 
     while (list($album_sn, $album_name, $image_url) = $xoopsDB->fetchRow($result)) {
 
-        $album_arr[$i]['album_sn'] = $album_sn;
+        $album_arr[$i]['album_sn']   = $album_sn;
         $album_arr[$i]['album_name'] = $album_name;
-        $album_arr[$i]['image_url'] = $image_url;
+        $album_arr[$i]['image_url']  = $image_url;
         $i++;
     }
 

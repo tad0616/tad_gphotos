@@ -27,7 +27,7 @@ function tad_gphotos_albums($options)
 {
     global $xoopsDB, $xoTheme;
     if ($xoTheme) {
-        $xoTheme->addStylesheet('modules/tad_gphotos/css/module.css');
+        $xoTheme->addStylesheet('modules/tad_gphotos/css/module.css?t=' . time());
     } else {
         $block['css'] = '<link rel="stylesheet" href="<{$xoops_url}>/modules/tad_gphotos/css/module.css" type="text/css">';
     }
@@ -47,11 +47,11 @@ function tad_gphotos_albums($options)
 
     $block['img_height'] = $block['height'] - 30;
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos') . '` ORDER BY ' . $block['options1'] . ' ' . $block['options2'] . ' LIMIT 0,?';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos') . '` ORDER BY ' . $block['options1'] . ' ' . $block['options2'] . ' LIMIT 0,?';
     $result = Utility::query($sql, 'i', [$block['options0']]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while ($all = $xoopsDB->fetchArray($result)) {
-        $sql2 = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos_images') . '` WHERE `album_sn` =? ORDER BY RAND() LIMIT 0,1';
+        $sql2    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_gphotos_images') . '` WHERE `album_sn` =? ORDER BY RAND() LIMIT 0,1';
         $result2 = Utility::query($sql2, 'i', [$all['album_sn']]) or Utility::web_error($sql2, __FILE__, __LINE__);
 
         $all['cover'] = $xoopsDB->fetchArray($result2);

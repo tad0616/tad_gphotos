@@ -35,9 +35,9 @@ function get_tad_gphotos_cate_options($page = '', $mode = 'edit', $default_csn =
     $post_permission = Tools::chk_permission('return');
 
     $categoryHelper = new CategoryHelper('tad_gphotos_cate', 'csn', 'of_csn', 'title');
-    $count = $categoryHelper->getCategoryCount();
+    $count          = $categoryHelper->getCategoryCount('tad_gphotos');
 
-    $sql = 'SELECT `csn`, `title` FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` WHERE `of_csn`=? ORDER BY `sort`';
+    $sql    = 'SELECT `csn`, `title` FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` WHERE `of_csn`=? ORDER BY `sort`';
     $result = Utility::query($sql, 'i', [$start_search_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $prefix = str_repeat('&nbsp;&nbsp;', $level);
@@ -66,7 +66,7 @@ function get_tad_gphotos_cate_options($page = '', $mode = 'edit', $default_csn =
         if ('none' === $page or empty($count[$csn])) {
             $counter = '';
         } else {
-            $w = ('admin' === $page) ? _MA_TADGPHOTOS_CATE_COUNT : _MD_TADGPHOTOS_CATE_COUNT;
+            $w       = ('admin' === $page) ? _MA_TADGPHOTOS_CATE_COUNT : _MD_TADGPHOTOS_CATE_COUNT;
             $counter = ' (' . sprintf($w, $count[$csn]) . ') ';
         }
         $main .= "<option value='$csn' $selected>{$prefix}{$cate_title}{$counter}</option>";
@@ -87,7 +87,7 @@ function tad_gphotos_cate_form($csn = '')
 
     //抓取預設值
     $categoryHelper = new CategoryHelper('tad_gphotos_cate', 'csn', 'of_csn', 'title');
-    $DBV = !empty($csn) ? $categoryHelper->getCategory($csn) : [];
+    $DBV            = !empty($csn) ? $categoryHelper->getCategory($csn, 'tad_gphotos') : [];
 
     //預設值設定
 
@@ -132,7 +132,7 @@ function tad_gphotos_cate_form($csn = '')
 function tad_gphotos_cate_max_sort()
 {
     global $xoopsDB;
-    $sql = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` WHERE `of_csn`=?';
+    $sql    = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_gphotos_cate') . '` WHERE `of_csn`=?';
     $result = Utility::query($sql, 'i', [0]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     list($sort) = $xoopsDB->fetchRow($result);
@@ -145,10 +145,10 @@ function insert_tad_gphotos_cate()
 {
     global $xoopsDB;
 
-    $title = (string) $_POST['title'];
+    $title       = (string) $_POST['title'];
     $description = Wcag::amend($_POST['description']);
-    $of_csn = (int) $_POST['of_csn'];
-    $sort = (int) $_POST['sort'];
+    $of_csn      = (int) $_POST['of_csn'];
+    $sort        = (int) $_POST['sort'];
 
     $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_gphotos_cate') . '` (`of_csn`, `title`, `sort`, `description`) VALUES (?, ?, ?, ?)';
     Utility::query($sql, 'isis', [$of_csn, $title, $sort, $description]) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -167,10 +167,10 @@ function update_tad_gphotos_cate($csn = '')
 {
     global $xoopsDB;
 
-    $title = (string) $_POST['title'];
+    $title       = (string) $_POST['title'];
     $description = Wcag::amend($_POST['description']);
-    $of_csn = (int) $_POST['of_csn'];
-    $sort = (int) $_POST['sort'];
+    $of_csn      = (int) $_POST['of_csn'];
+    $sort        = (int) $_POST['sort'];
 
     $sql = 'UPDATE `' . $xoopsDB->prefix('tad_gphotos_cate') . '` SET `of_csn` =?, `title` =?, `sort` =?, `description` =? WHERE `csn` =?';
     Utility::query($sql, 'isisi', [$of_csn, $title, $sort, $description, $csn]) or Utility::web_error($sql, __FILE__, __LINE__);
