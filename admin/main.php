@@ -117,7 +117,7 @@ function list_tad_gphoto($csn = '')
     if ($csn) {
         $cate = $categoryHelper->getCategory($csn, 'tad_gphotos');
     }
-    // Utility::test($cate, 'cate', 'dd');
+    Utility::test($cate, 'cate', 'dd');
     $xoopsTpl->assign('cate', $cate);
     $xoopsTpl->assign('csn', $csn);
 

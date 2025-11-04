@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tad Gphotos module
  *
@@ -20,9 +21,8 @@
 $modversion = array();
 
 //---模組基本資訊---//
-$modversion['name'] = _MI_TADGPHOTOS_NAME;
-// $modversion['version'] = '2.2';
-$modversion['version']     = $_SESSION['xoops_version'] >= 20511 ? '3.1.0-Stable' : '3.1';
+$modversion['name']        = _MI_TADGPHOTOS_NAME;
+$modversion['version']     = $_SESSION['xoops_version'] >= 20511 ? '3.2.0-Stable' : '3.2';
 $modversion['description'] = _MI_TADGPHOTOS_DESC;
 $modversion['author']      = _MI_TADGPHOTOS_AUTHOR;
 $modversion['credits']     = _MI_TADGPHOTOS_CREDITS;
@@ -32,13 +32,13 @@ $modversion['image']       = "images/logo.png";
 $modversion['dirname']     = basename(__DIR__);
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2025-06-23';
+$modversion['release_date']        = '2025-11-04';
 $modversion['module_website_url']  = 'https://www.tad0616.net';
 $modversion['module_website_name'] = _MI_TADGPHOTOS_AUTHOR_WEB;
 $modversion['module_status']       = 'release';
 $modversion['author_website_url']  = 'https://www.tad0616.net';
 $modversion['author_website_name'] = _MI_TADGPHOTOS_AUTHOR_WEB;
-$modversion['min_php']             = '5.5';
+$modversion['min_php']             = '7.3';
 $modversion['min_xoops']           = '2.5.10';
 
 //---paypal資訊---//

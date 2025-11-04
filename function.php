@@ -1,4 +1,5 @@
 <?php
+
 use XoopsModules\Tadtools\CategoryHelper;
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\FormValidator;
@@ -80,6 +81,9 @@ function get_tad_gphotos_cate_options($page = '', $mode = 'edit', $default_csn =
 function tad_gphotos_cate_form($csn = '')
 {
     global $xoopsTpl;
+    //判斷目前使用者是否有：建立相簿
+    Tools::chk_permission();
+
     $TadDataCenter = new TadDataCenter('tad_gphotos');
     $TadDataCenter->set_col('csn', $csn);
     $sort_form = $TadDataCenter->getForm('return', 'input', 'sort_kind', 'radio', 'custom', [_MD_TADGPHOTOS_SORT_BY_CUSTOM => 'custom', _MD_TADGPHOTOS_SORT_BY_TITLE => 'title']);
@@ -197,7 +201,6 @@ function delete_tad_gphotos($album_sn = '')
 
     $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_gphotos') . '` WHERE `album_sn` = ?';
     Utility::query($sql, 'i', [$album_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
-
 }
 
 //刪除tad_gphotos_images某筆資料資料
@@ -214,5 +217,4 @@ function delete_tad_gphotos_images($album_sn = '')
 
     $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_gphotos_images') . '` WHERE `album_sn` = ?';
     Utility::query($sql, 'i', [$album_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
-
 }

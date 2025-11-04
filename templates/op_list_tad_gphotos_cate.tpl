@@ -27,8 +27,9 @@
                 <div class="col-sm-8 text-right text-end">
                     <div style="margin: 10px 0px;">
                         <{if $now_op!="tad_gphotos_add_cate_form" and $csn}>
-                        <span <{if $cate.count > 0 or $cate.sub_cate|@count > 0}>data-toggle="tooltip" data-placement="top" title="<{$smarty.const._MA_TADGPHOTOS_HAVE_SOMETHING|sprintf:$cate.sub_cate:$cate.count}>"<{/if}>>
-                                <a href="javascript:delete_tad_gphotos_cate_func(<{$cate.csn}>);" class="btn btn-sm btn-danger <{if $cate.count > 0 or $cate.sub_cate|@count > 0}>disabled<{/if}>"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
+                        <{assign var="sub_cate_count" value=$cate.sub_cate|@count}>
+                        <span <{if $cate.count > 0 or $sub_cate_count > 0}>data-toggle="tooltip" data-placement="top" title="<{$smarty.const._MA_TADGPHOTOS_HAVE_SOMETHING|sprintf:$sub_cate_count:$cate.count}>"<{/if}>>
+                                <a href="javascript:delete_tad_gphotos_cate_func(<{$cate.csn}>);" class="btn btn-sm btn-danger <{if $cate.count > 0 or $sub_cate_count > 0}>disabled<{/if}>"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
                             </span>
                             <a href="main.php?op=tad_gphotos_add_cate_form&csn=<{$csn|default:''}>" class="btn btn-sm btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> <{$smarty.const._TAD_EDIT}></a>
                         <{/if}>

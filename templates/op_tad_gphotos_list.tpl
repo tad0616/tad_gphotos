@@ -5,7 +5,7 @@
     <div id="csn_<{$cate.csn}>" class="polaroid-cate" style="width: <{$config.polaroid_width}>px; height: <{$config.polaroid_height}>px; margin: <{$config.polaroid_margin_y}>px <{$config.polaroid_margin_x}>px;" data-toggle="tooltip">
         <a href="index.php?csn=<{$cate.csn}>" style="color: transparent; ">
             <{if $cate.albums_num==0}>
-                    <img src="https://fakeimg.pl/<{$config.polaroid_width}>x<{$img_height|default:''}>/?retina=1&text=<{$smarty.const._MD_TADGPHOTOS_NO_ALBUM_YET}>&font=noto" style="width: <{$config.polaroid_width}>px; height: <{$img_height|default:''}>px;" class="thumb-cate-img" alt="no"><span class="sr-only visually-hidden"><{$smarty.const._MD_TADGPHOTOS_NO_ALBUM_YET}></span>
+                    <img src="https://imagefaker.access.mx.com/<{$config.polaroid_width}>x<{$img_height|default:''}>/?retina=1&text=<{$smarty.const._MD_TADGPHOTOS_NO_ALBUM_YET}>&font=noto" style="width: <{$config.polaroid_width}>px; height: <{$img_height|default:''}>px;" class="thumb-cate-img" alt="no"><span class="sr-only visually-hidden"><{$smarty.const._MD_TADGPHOTOS_NO_ALBUM_YET}></span>
             <{elseif $cate.albums_num==1}>
                 <{if $cate.albums.1.image_url}>
                     <img src="<{$cate.albums.1.image_url}>" class="thumb-cate-img" style="margin:4px; width: <{$config.polaroid_width-8}>px; height: <{$img_height-8}>px; " alt="<{$cate.albums.1.image_sn}>"><span class="sr-only visually-hidden"><{$cate.title}></span>
@@ -62,7 +62,7 @@
         <{foreach from=$all_tad_gphotos item=data}>
             <div id="album_sn_<{$data.album_sn}>" class="polaroid" style="width: <{$config.polaroid_width}>px; height: <{$config.polaroid_height}>px; margin: <{$config.polaroid_margin_y}>px <{$config.polaroid_margin_x}>px;">
                 <a href="index.php?album_sn=<{$data.album_sn}>">
-                    <img src="<{$data.cover.image_url|default:'https://fakeimg.pl/220x190/?retina=1&text=>__<&font=noto'}>" id="tr_<{$data.album_sn}>" class="thumb-img" style="height: <{$img_height|default:''}>px;" alt="<{$data.album_sn}>"><span class="sr-only visually-hidden"><{$data.album_name}></span>
+                    <img src="<{$data.cover.image_url|default:'https://imagefaker.access.mx.com/220x190/?retina=1&text=>__<&font=noto'}>" id="tr_<{$data.album_sn}>" class="thumb-img" style="height: <{$img_height|default:''}>px;" alt="<{$data.album_sn}>"><span class="sr-only visually-hidden"><{$data.album_name}></span>
                 </a>
                 <div class="polaroid-container">
                     <p>
